@@ -6,6 +6,7 @@ use App\Models\Category; // Include the Category model
 use App\Models\Post; // Include the Post model
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -26,13 +27,7 @@ class PostController extends Controller
     // Store the newly created post
     public function store(Request $request)
     {
-        // Validate the incoming request
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'categories' => 'required|array',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        $this->validator($request->all())->validate(); // Call the validator method
 
         // Handle file upload
         $imagePath = null;
@@ -49,8 +44,24 @@ class PostController extends Controller
             'user_id' => Auth::id(),
         ]);
 
-        // Redirect to home with a success message
         // Redirect back to the dashboard with a success message
         return redirect()->route('author.dashboard')->with('success', 'Post created successfully!');
+    }
+
+    // Validator method
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'title' => ['required', 'string', 'max:100'],
+            'content' => ['required', 'string', 'min:255'],
+            'categories' => ['required', 'array', 'min:1'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif|max:2048'],
+        ], [
+            'title.required' => 'The post title is required.',
+            'content.required' => 'The post content is required.',
+            'content.min' => 'The content must be at least 255 characters.',
+            'categories.required' => 'You must select at least one category.',
+            'categories.min' => 'You must select at least one category.',
+        ]);
     }
 }
