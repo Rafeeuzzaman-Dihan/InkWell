@@ -7,6 +7,7 @@
     @vite('resources/css/app.css')
 </head>
 <body class="bg-gray-100">
+    @include('components.navbar')
     <div class="container mx-auto p-6">
         <h1 class="text-3xl font-bold mb-4">Admin Dashboard</h1>
         <p class="mb-6 text-gray-700">Welcome to the admin dashboard!</p>

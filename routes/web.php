@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,3 +37,5 @@ Route::get('/user/dashboard', function () {
 })->middleware('auth')->name('user.dashboard');
 
 Route::post('/categories', [CategoryController::class, 'store'])->middleware('auth')->name('categories.store');
+
+Route::get('/author/dashboard', [PostController::class, 'dashboard'])->middleware('auth')->name('author.dashboard');

@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Author Dashboard</title>
     @vite('resources/css/app.css')
+    <!-- Include Select2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 </head>
 <body class="bg-gray-100">
     @include('components.navbar')
@@ -43,6 +45,15 @@
                 </div>
 
                 <div class="mb-4">
+                    <label for="categories" class="block text-sm font-medium text-gray-700">Categories</label>
+                    <select id="categories" name="categories[]" multiple class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500">
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-4">
                     <label for="content" class="block text-sm font-medium text-gray-700">Content</label>
                     <textarea id="content" name="content" rows="4" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500" placeholder="Write your post content here..."></textarea>
                 </div>
@@ -56,5 +67,17 @@
             </form>
         </section>
     </div>
+
+    <!-- Include jQuery and Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#categories').select2({
+                placeholder: "Select categories",
+                allowClear: true
+            });
+        });
+    </script>
 </body>
 </html>
