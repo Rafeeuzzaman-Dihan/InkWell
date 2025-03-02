@@ -9,7 +9,7 @@
 </head>
 
 <body class="bg-gray-100">
-    @include('components.navbar') <!-- This should be included -->
+    @include('components.navbar')
 
     <div class="flex flex-col items-center justify-center h-screen">
         <div class="bg-white shadow-md rounded-lg p-8 w-96">
@@ -18,7 +18,7 @@
             <p class="text-gray-600">This is a simple homepage for all users.</p>
             <p class="text-gray-600">Feel free to explore the available features.</p>
             <p class="text-gray-600">Thank you for logging in!</p>
-            
+
         </div>
     </div>
 </body>
