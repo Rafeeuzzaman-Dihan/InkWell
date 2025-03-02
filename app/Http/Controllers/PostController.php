@@ -50,6 +50,7 @@ class PostController extends Controller
         ]);
 
         // Redirect to home with a success message
-        return redirect()->route('home')->with('success', 'Post created successfully!');
+        // Redirect back to the dashboard with a success message
+        return redirect()->route('author.dashboard')->with('success', 'Post created successfully!');
     }
 }
