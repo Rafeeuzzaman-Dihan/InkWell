@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,10 +27,12 @@ Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 })->middleware('auth')->name('admin.dashboard');
 
-Route::get('/autho/dashboard', function () {
+Route::get('/author/dashboard', function () {
     return view('author.dashboard');
 })->middleware('auth')->name('author.dashboard');
 
 Route::get('/user/dashboard', function () {
     return view('user.dashboard');
 })->middleware('auth')->name('user.dashboard');
+
+Route::post('/categories', [CategoryController::class, 'store'])->middleware('auth')->name('categories.store');
