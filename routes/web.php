@@ -39,3 +39,7 @@ Route::get('/user/dashboard', function () {
 Route::post('/categories', [CategoryController::class, 'store'])->middleware('auth')->name('categories.store');
 
 Route::get('/author/dashboard', [PostController::class, 'dashboard'])->middleware('auth')->name('author.dashboard');
+
+Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store');

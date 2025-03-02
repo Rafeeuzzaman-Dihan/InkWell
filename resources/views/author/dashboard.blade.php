@@ -18,8 +18,8 @@
         <section class="bg-white shadow-md rounded-lg p-4 mb-8">
             <h2 class="text-xl font-semibold mb-2">Profile</h2>
             <ul class="list-disc pl-5">
-                <li><strong>Name:</strong> Your Name</li>
-                <li><strong>Email:</strong> your.email@example.com</li>
+                <li><strong>Name:</strong> {{ Auth::user()->name }}</li>
+                <li><strong>Email:</strong> {{ Auth::user()->email }}</li>
                 <li><a href="#" class="text-blue-500 hover:underline">Edit Profile</a></li>
             </ul>
         </section>
@@ -36,7 +36,7 @@
             @endif
 
             <!-- Form to create a new post -->
-            {{-- <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data"> --}}
+            <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-4">
