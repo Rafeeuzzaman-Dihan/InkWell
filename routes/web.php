@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\DashboardController; // Adjusted namespace if needed
 
 Route::get('/', function () {
     return view('welcome');
@@ -13,6 +12,10 @@ Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('
 Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware('auth')
-    ->name('dashboard');
+Route::get('/home', function () {
+    return view('home');
+})->middleware('auth')
+  ->name('home');
+
+  // Logout route
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
