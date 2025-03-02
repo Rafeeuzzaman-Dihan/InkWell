@@ -8,7 +8,6 @@
     @vite('resources/css/app.css')
 </head>
 
-
 <body class="bg-gray-100">
     <div class="flex items-center justify-center h-screen">
         <div class="bg-white shadow-md rounded-lg p-8 w-96">
@@ -26,32 +25,20 @@
 
             <form action="{{ route('register') }}" method="POST">
                 @csrf
-                <div class="mb-4">
-                    <label for="name" class="block text-gray-700">Name</label>
-                    <input type="text" name="name" required
-                        class="mt-1 block w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-blue-300"
-                        placeholder="Enter your name">
-                </div>
+
+                <x-textbox name="name" placeholder="Enter your name" required="true" />
+                <x-textbox name="email" placeholder="Enter your email" type="email" required="true" />
+                <x-textbox name="password" placeholder="Enter your password" type="password" required="true" />
+                <x-textbox name="password_confirmation" placeholder="Confirm your password" type="password" required="true" label="Confirm Password" />
 
                 <div class="mb-4">
-                    <label for="email" class="block text-gray-700">Email</label>
-                    <input type="email" name="email" required
-                        class="mt-1 block w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-blue-300"
-                        placeholder="Enter your email">
-                </div>
-
-                <div class="mb-4">
-                    <label for="password" class="block text-gray-700">Password</label>
-                    <input type="password" name="password" required
-                        class="mt-1 block w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-blue-300"
-                        placeholder="Enter your password">
-                </div>
-
-                <div class="mb-6">
-                    <label for="password_confirmation" class="block text-gray-700">Confirm Password</label>
-                    <input type="password" name="password_confirmation" required
-                        class="mt-1 block w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-blue-300"
-                        placeholder="Confirm your password">
+                    <label for="role" class="block text-gray-700">Select Role</label>
+                    <select name="role" id="role" required
+                        class="mt-1 block w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-blue-300">
+                        <option value="author">Author</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                    </select>
                 </div>
 
                 <button type="submit"

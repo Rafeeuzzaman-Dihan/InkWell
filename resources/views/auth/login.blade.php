@@ -25,19 +25,9 @@
 
             <form action="{{ route('login') }}" method="POST">
                 @csrf
-                <div class="mb-4">
-                    <label for="email" class="block text-gray-700">Email</label>
-                    <input type="email" name="email" required
-                        class="mt-1 block w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-blue-300"
-                        placeholder="Enter your email">
-                </div>
 
-                <div class="mb-4">
-                    <label for="password" class="block text-gray-700">Password</label>
-                    <input type="password" name="password" required
-                        class="mt-1 block w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring focus:ring-blue-300"
-                        placeholder="Enter your password">
-                </div>
+                <x-textbox name="email" placeholder="Enter your email" label="Email" type="email" required="true" />
+                <x-textbox name="password" placeholder="Enter your password" label="Password" type="password" required="true" />
 
                 <button type="submit"
                     class="w-full bg-blue-500 text-white font-bold py-2 rounded-lg hover:bg-blue-600 transition duration-200">Login</button>
