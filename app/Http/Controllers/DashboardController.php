@@ -17,8 +17,6 @@ class DashboardController extends Controller
                 return redirect()->route('author.dashboard');
             case 'user':
                 return redirect()->route('user.dashboard');
-
-                return abort(403);
         }
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category; 
-use App\Models\Post; 
+use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -12,24 +12,23 @@ class PostController extends Controller
 {
     public function dashboard()
     {
-        $categories = Category::all(); 
+        $categories = Category::all();
         return view('author.dashboard', compact('categories'));
     }
 
     public function create()
     {
-        $categories = Category::all(); 
+        $categories = Category::all();
         return view('posts.create', compact('categories'));
     }
 
     public function store(Request $request)
     {
-        $this->validator($request->all())->validate(); 
+        $this->validator($request->all())->validate();
 
-        // Handle file upload
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images', 'public'); 
+            $imagePath = $request->file('image')->store('images', 'public');
         }
 
         Post::create([

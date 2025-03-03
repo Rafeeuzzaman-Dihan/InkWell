@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Author Dashboard</title>
     @vite('resources/css/app.css')
-    <!-- Include Select2 CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 </head>
 <body class="bg-gray-100">
@@ -14,7 +13,6 @@
         <h1 class="text-3xl font-bold mb-4">Author Dashboard</h1>
         <p class="mb-6 text-gray-700">Welcome to your author dashboard! Here you can manage your profile and create new posts.</p>
 
-        <!-- Profile Section -->
         <section class="bg-white shadow-md rounded-lg p-4 mb-8">
             <h2 class="text-xl font-semibold mb-2">Profile</h2>
             <ul class="list-disc pl-5">
@@ -24,7 +22,6 @@
             </ul>
         </section>
 
-        <!-- Create Post Section -->
         <section class="bg-white shadow-md rounded-lg p-4">
             <h2 class="text-xl font-semibold mb-4">Create Post</h2>
             <p class="mb-4 text-gray-600">Start writing your new post below:</p>
@@ -45,7 +42,6 @@
                 </div>
             @endif
 
-            <!-- Form to create a new post -->
             <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
@@ -78,7 +74,6 @@
         </section>
     </div>
 
-    <!-- Include jQuery and Select2 JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script>

@@ -13,13 +13,11 @@ class LikeController extends Controller
     {
         $post = Post::findOrFail($postId);
 
-        // Check if the user already liked the post
         $likeExists = Like::where('post_id', $post->id)
                           ->where('user_id', Auth::id())
                           ->exists();
 
         if (!$likeExists) {
-            // Create a new like
             $like = new Like();
             $like->post_id = $post->id;
             $like->user_id = Auth::id();
@@ -33,7 +31,6 @@ class LikeController extends Controller
     {
         $post = Post::findOrFail($postId);
 
-        // Find the like and delete it
         $like = Like::where('post_id', $post->id)
                     ->where('user_id', Auth::id())
                     ->first();

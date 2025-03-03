@@ -14,7 +14,6 @@
         <h1 class="text-3xl font-bold mb-4">Admin Dashboard</h1>
         <p class="mb-6 text-gray-700">Welcome to the admin dashboard!</p>
 
-        <!-- Profile Section -->
         <section class="bg-white shadow-md rounded-lg p-4 mb-8">
             <h2 class="text-xl font-semibold mb-2">Profile</h2>
             <ul class="list-disc pl-5">
@@ -24,7 +23,6 @@
             </ul>
         </section>
 
-        <!-- Create Category Section -->
         <section class="bg-white shadow-md rounded-lg p-4 mb-8">
             <h2 class="text-xl font-semibold mb-4">Create Category</h2>
 
