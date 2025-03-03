@@ -23,18 +23,20 @@
                     @if ($post->image)
                         <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image" class="w-full h-48 object-cover">
                     @endif
-            
+
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2">{{ $post->title }}</h3>
-            
+
                         <p class="text-gray-600 text-sm mb-4">{{ Str::limit($post->content, 100) }}</p>
-            
+
+                        <p class="text-violet-900 text-sm mb-4">
+                            <strong>{{ $post->likes->count() }}</strong> Likes
+                        </p>
+
                         <a href="{{ route('posts.show', $post->id) }}" class="text-blue-500 hover:underline">Read More</a>
                     </div>
                 </div>
-            @endforeach
-            
-            
+                @endforeach
             </div>
         @endif
     </div>

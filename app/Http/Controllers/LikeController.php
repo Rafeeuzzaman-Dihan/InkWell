@@ -14,8 +14,8 @@ class LikeController extends Controller
         $post = Post::findOrFail($postId);
 
         $likeExists = Like::where('post_id', $post->id)
-                          ->where('user_id', Auth::id())
-                          ->exists();
+            ->where('user_id', Auth::id())
+            ->exists();
 
         if (!$likeExists) {
             $like = new Like();
@@ -24,12 +24,10 @@ class LikeController extends Controller
             $like->save();
 
             return response()->json(['action' => 'liked']);
-        }
-
-        else {
+        } else {
             $like = Like::where('post_id', $post->id)
-                        ->where('user_id', Auth::id())
-                        ->first();
+                ->where('user_id', Auth::id())
+                ->first();
             $like->delete();
 
             return response()->json(['action' => 'unliked']);
@@ -41,8 +39,8 @@ class LikeController extends Controller
         $post = Post::findOrFail($postId);
 
         $like = Like::where('post_id', $post->id)
-                    ->where('user_id', Auth::id())
-                    ->first();
+            ->where('user_id', Auth::id())
+            ->first();
 
         if ($like) {
             $like->delete();

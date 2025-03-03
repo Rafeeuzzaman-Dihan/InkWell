@@ -55,7 +55,8 @@
                 @csrf
                 <div class="mb-4">
                     <label for="body" class="block text-sm font-medium text-gray-700">Comment</label>
-                    <textarea name="body" id="body" rows="4" required class="mt-1 p-2 border border-gray-300 rounded-md w-full"></textarea>
+                    <textarea name="body" id="body" rows="4" required
+                        class="mt-1 p-2 border border-gray-300 rounded-md w-full"></textarea>
                 </div>
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Submit</button>
             </form>
@@ -63,32 +64,32 @@
     </div>
 
     <script>
-        document.getElementById('like-button').addEventListener('click', function() {
+        document.getElementById('like-button').addEventListener('click', function () {
             axios.post('{{ route('likes.store', $post->id) }}', {
                 _token: '{{ csrf_token() }}'
             })
-            .then(response => {
-                const likeCount = document.getElementById('like-count');
-                const button = document.getElementById('like-button');
+                .then(response => {
+                    const likeCount = document.getElementById('like-count');
+                    const button = document.getElementById('like-button');
 
-                if (response.data.action === 'liked') {
-                    likeCount.innerText = parseInt(likeCount.innerText) + 1 + ' Likes';
-                    button.innerText = 'Unlike';
-                    button.classList.remove('bg-blue-500');
-                    button.classList.add('bg-red-500');
-                } else {
-                    likeCount.innerText = parseInt(likeCount.innerText) - 1 + ' Likes';
-                    button.innerText = 'Like';
-                    button.classList.remove('bg-red-500');
-                    button.classList.add('bg-blue-500');
-                }
-            })
-            .catch(error => {
-                console.error('Error liking the post:', error);
-            });
+                    if (response.data.action === 'liked') {
+                        likeCount.innerText = parseInt(likeCount.innerText) + 1 + ' Likes';
+                        button.innerText = 'Unlike';
+                        button.classList.remove('bg-blue-500');
+                        button.classList.add('bg-red-500');
+                    } else {
+                        likeCount.innerText = parseInt(likeCount.innerText) - 1 + ' Likes';
+                        button.innerText = 'Like';
+                        button.classList.remove('bg-red-500');
+                        button.classList.add('bg-blue-500');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error liking the post:', error);
+                });
         });
 
-        document.getElementById('comment-form').addEventListener('submit', function(e) {
+        document.getElementById('comment-form').addEventListener('submit', function (e) {
             e.preventDefault();
             const body = document.getElementById('body').value;
 
@@ -96,19 +97,19 @@
                 _token: '{{ csrf_token() }}',
                 body: body
             })
-            .then(response => {
-                const commentsDiv = document.getElementById('comments');
-                const newComment = document.createElement('div');
-                newComment.classList.add('border-b', 'mb-4', 'pb-2', 'comment');
-                newComment.innerHTML = `<p class="font-bold">${response.data.user_name}</p>
+                .then(response => {
+                    const commentsDiv = document.getElementById('comments');
+                    const newComment = document.createElement('div');
+                    newComment.classList.add('border-b', 'mb-4', 'pb-2', 'comment');
+                    newComment.innerHTML = `<p class="font-bold">${response.data.user_name}</p>
                                         <p>${response.data.body}</p>
                                         <p class="text-gray-600">${response.data.created_at}</p>`;
-                commentsDiv.prepend(newComment);
-                document.getElementById('body').value = '';
-            })
-            .catch(error => {
-                console.error('Error submitting comment:', error);
-            });
+                    commentsDiv.prepend(newComment);
+                    document.getElementById('body').value = '';
+                })
+                .catch(error => {
+                    console.error('Error submitting comment:', error);
+                });
         });
     </script>
 </body>
