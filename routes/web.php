@@ -8,6 +8,11 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\HomeController;
 
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -39,3 +44,4 @@ Route::get('/posts/create', [PostController::class, 'create'])->name('posts.crea
 
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');

@@ -19,19 +19,22 @@
         @else
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 @foreach ($posts as $post)
-                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                        @if ($post->image)
-                            <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image" class="w-full h-48 object-cover">
-                        @endif
-
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2">{{ $post->title }}</h3>
-                            <p class="text-gray-600 text-sm mb-4">{{ Str::limit($post->content, 100) }}</p>
-
-                            <a href="#" class="text-blue-500 hover:underline">Read More</a>
-                        </div>
+                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                    @if ($post->image)
+                        <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image" class="w-full h-48 object-cover">
+                    @endif
+            
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">{{ $post->title }}</h3>
+            
+                        <p class="text-gray-600 text-sm mb-4">{{ Str::limit($post->content, 100) }}</p>
+            
+                        <a href="{{ route('posts.show', $post->id) }}" class="text-blue-500 hover:underline">Read More</a>
                     </div>
-                @endforeach
+                </div>
+            @endforeach
+            
+            
             </div>
         @endif
     </div>
