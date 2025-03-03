@@ -26,15 +26,16 @@
 
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2">{{ $post->title }}</h3>
-
                         <p class="text-gray-600 text-sm mb-4">{{ Str::limit($post->content, 100) }}</p>
 
-                        <p class="text-violet-900 text-sm mb-4">
-                            <strong>{{ $post->likes->count() }}</strong> Likes
-                        </p>
-                        <p class="text-violet-900 text-sm mb-4">
-                            <strong>{{ $post->comments->count() }}</strong> Comments
-                        </p>
+                        <div class=" flex justify-between text-red-900 text-sm mb-4">
+                            <p>
+                                <strong>{{ $post->likes->count() }}</strong> Likes
+                            </p>
+                            <p>
+                                <strong>{{ $post->comments->count() }}</strong> Comments
+                            </p>
+                        </div>
 
                         <a href="{{ route('posts.show', $post->id) }}" class="text-blue-500 hover:underline">Read More</a>
                     </div>
