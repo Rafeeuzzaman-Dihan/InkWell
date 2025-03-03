@@ -32,6 +32,9 @@
                         <p class="text-violet-900 text-sm mb-4">
                             <strong>{{ $post->likes->count() }}</strong> Likes
                         </p>
+                        <p class="text-violet-900 text-sm mb-4">
+                            <strong>{{ $post->comments->count() }}</strong> Comments
+                        </p>
 
                         <a href="{{ route('posts.show', $post->id) }}" class="text-blue-500 hover:underline">Read More</a>
                     </div>
