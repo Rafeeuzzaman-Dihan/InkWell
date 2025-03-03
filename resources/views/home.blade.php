@@ -11,15 +11,29 @@
 <body class="bg-gray-100">
     @include('components.navbar')
 
-    <div class="flex flex-col items-center justify-center h-screen">
-        <div class="bg-white shadow-md rounded-lg p-8 w-96">
-            <h2 class="text-center text-2xl font-bold mb-6">Welcome to Your Homepage!</h2>
+    <div class="container mx-auto py-10">
+        <h2 class="text-center text-3xl font-bold mb-8">Latest Posts</h2>
 
-            <p class="text-gray-600">This is a simple homepage for all users.</p>
-            <p class="text-gray-600">Feel free to explore the available features.</p>
-            <p class="text-gray-600">Thank you for logging in!</p>
+        @if ($posts->isEmpty())
+            <p class="text-center text-gray-600">No posts available.</p>
+        @else
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                @foreach ($posts as $post)
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        @if ($post->image)
+                            <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image" class="w-full h-48 object-cover">
+                        @endif
 
-        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">{{ $post->title }}</h3>
+                            <p class="text-gray-600 text-sm mb-4">{{ Str::limit($post->content, 100) }}</p>
+
+                            <a href="#" class="text-blue-500 hover:underline">Read More</a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
     </div>
 </body>
 
