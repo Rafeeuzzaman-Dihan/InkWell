@@ -19,7 +19,9 @@
             <ul class="list-disc pl-5">
                 <li><strong>Name:</strong> {{ $user->name }}</li>
                 <li><strong>Email:</strong> {{ $user->email }}</li>
-                <li><a href="#" class="text-blue-500 hover:underline">Edit Profile</a></li>
+                <li>
+                    <a href="{{ route('profile.edit') }}" class="text-blue-500 hover:underline">Edit Profile</a>
+                </li>
             </ul>
         </section>
 
