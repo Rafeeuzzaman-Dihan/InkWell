@@ -7,6 +7,7 @@
     <title>{{ $post->title }}</title>
     @vite('resources/css/app.css')
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
 
 <body class="bg-gray-100">
@@ -33,8 +34,9 @@
             <div class="flex items-center mb-4">
                 <button id="like-button" class="mr-4
                     {{ $post->likes->contains('user_id', Auth::id()) ? 'bg-red-500' : 'bg-blue-500' }}
-                    text-white px-4 py-2 rounded-md">
-                    {{ $post->likes->contains('user_id', Auth::id()) ? 'Unlike' : 'Like' }}
+                    text-white px-4 py-2 rounded-md flex items-center">
+                    <i class="fas {{ $post->likes->contains('user_id', Auth::id()) ? 'fa-thumbs-down' : 'fa-thumbs-up' }}"></i>
+                    <span class="ml-2">{{ $post->likes->contains('user_id', Auth::id()) ? 'Unlike' : 'Like' }}</span>
                 </button>
                 <p id="like-count" class="text-sm text-gray-600">{{ $post->likes->count() }} Likes</p>
             </div>
@@ -74,12 +76,14 @@
 
                     if (response.data.action === 'liked') {
                         likeCount.innerText = parseInt(likeCount.innerText) + 1 + ' Likes';
-                        button.innerText = 'Unlike';
+                        button.querySelector('i').classList.remove('fa-thumbs-up');
+                        button.querySelector('i').classList.add('fa-thumbs-down');
                         button.classList.remove('bg-blue-500');
                         button.classList.add('bg-red-500');
                     } else {
                         likeCount.innerText = parseInt(likeCount.innerText) - 1 + ' Likes';
-                        button.innerText = 'Like';
+                        button.querySelector('i').classList.remove('fa-thumbs-down');
+                        button.querySelector('i').classList.add('fa-thumbs-up');
                         button.classList.remove('bg-red-500');
                         button.classList.add('bg-blue-500');
                     }
