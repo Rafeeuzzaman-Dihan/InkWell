@@ -11,4 +11,11 @@ class HomeController extends Controller
         $posts = Post::latest()->get();
         return view('home', compact('posts'));
     }
+
+    public function show($id)
+    {
+        $post = Post::with(['comments.user'])->findOrFail($id);
+
+        return view('posts.show', compact('post'));
+    }
 }
