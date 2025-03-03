@@ -1,6 +1,5 @@
 <section class="bg-white shadow-md rounded-lg p-4 mb-8">
-    <h2 class="text-xl font-semibold mb-4">Admin Features</h2>
-    <p>Here you can manage categories, users, and other admin tasks.</p>
+    <h2 class="text-xl font-semibold mb-4">Add Category</h2>
     <form action="{{ route('categories.store') }}" method="POST">
         @csrf
         <div class="mb-4">

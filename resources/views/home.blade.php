@@ -12,7 +12,7 @@
     @include('components.navbar')
 
     <div class="container mx-auto py-10">
-        <h2 class="text-center text-3xl font-bold mb-8">Latest Posts</h2>
+        <h2 class="text-center text-3xl font-bold mb-8">All Posts</h2>
 
         @if ($posts->isEmpty())
             <p class="text-center text-gray-600">No posts available.</p>

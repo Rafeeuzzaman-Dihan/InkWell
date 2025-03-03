@@ -1,6 +1,5 @@
 <section class="bg-white shadow-md rounded-lg p-4 mb-8">
-    <h2 class="text-xl font-semibold mb-4">Author Features</h2>
-    <p>Here you can create and manage your posts.</p>
+    <h2 class="text-xl font-semibold mb-4">Author Dashboard</h2>
     <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-4">
