@@ -9,14 +9,9 @@
 </head>
 
 <body class="bg-gray-100">
+    @include('components.navbar')
     <section class="bg-white shadow-md rounded-lg p-4 mb-8">
         <h2 class="text-xl font-semibold mb-4">Edit Profile</h2>
-
-        @if (session('success'))
-            <div class="bg-green-200 text-green-700 p-4 rounded mb-4">
-                {{ session('success') }}
-            </div>
-        @endif
 
         @if ($errors->any())
             <div class="bg-red-200 text-red-700 p-4 rounded mb-4">
