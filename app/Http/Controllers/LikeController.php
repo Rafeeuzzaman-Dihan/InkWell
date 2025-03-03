@@ -22,9 +22,18 @@ class LikeController extends Controller
             $like->post_id = $post->id;
             $like->user_id = Auth::id();
             $like->save();
+
+            return response()->json(['action' => 'liked']);
         }
 
-        return redirect()->route('posts.show', $postId);
+        else {
+            $like = Like::where('post_id', $post->id)
+                        ->where('user_id', Auth::id())
+                        ->first();
+            $like->delete();
+
+            return response()->json(['action' => 'unliked']);
+        }
     }
 
     public function destroy($postId)
@@ -37,8 +46,9 @@ class LikeController extends Controller
 
         if ($like) {
             $like->delete();
+            return response()->json(['action' => 'unliked']);
         }
 
-        return redirect()->route('posts.show', $postId);
+        return response()->json(['action' => 'not_found']);
     }
 }

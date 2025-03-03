@@ -17,12 +17,18 @@ class CommentController extends Controller
 
         $post = Post::findOrFail($postId);
 
+        // Create a new comment
         $comment = new Comment();
         $comment->body = $request->body;
         $comment->post_id = $post->id;
         $comment->user_id = Auth::id();
         $comment->save();
 
-        return redirect()->route('posts.show', $postId);
+        // Return a JSON response
+        return response()->json([
+            'user_name' => $comment->user->name,
+            'body' => $comment->body,
+            'created_at' => $comment->created_at->format('M d, Y h:i A')
+        ]);
     }
 }

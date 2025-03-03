@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $post->title }}</title>
     @vite('resources/css/app.css')
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body class="bg-gray-100">
@@ -30,29 +31,27 @@
             </div>
 
             <div class="flex items-center mb-4">
-                <form action="{{ $post->likes->contains('user_id', Auth::id()) ? route('likes.destroy', $post->id) : route('likes.store', $post->id) }}" method="POST" class="mr-4">
-                    @csrf
-                    @if ($post->likes->contains('user_id', Auth::id()))
-                        @method('DELETE')
-                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md">Unlike</button>
-                    @else
-                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Like</button>
-                    @endif
-                </form>
-                <p class="text-sm text-gray-600">{{ $post->likes->count() }} Likes</p>
+                <button id="like-button" class="mr-4
+                    {{ $post->likes->contains('user_id', Auth::id()) ? 'bg-red-500' : 'bg-blue-500' }}
+                    text-white px-4 py-2 rounded-md">
+                    {{ $post->likes->contains('user_id', Auth::id()) ? 'Unlike' : 'Like' }}
+                </button>
+                <p id="like-count" class="text-sm text-gray-600">{{ $post->likes->count() }} Likes</p>
             </div>
 
             <h3 class="text-xl font-semibold mb-4">Comments</h3>
 
-            @foreach ($post->comments as $comment)
-                <div class="border-b mb-4 pb-2">
-                    <p class="font-bold">{{ $comment->user->name }}</p>
-                    <p>{{ $comment->body }}</p>
-                    <p class="text-gray-600">{{ $comment->created_at->format('M d, Y h:i A') }}</p>
-                </div>
-            @endforeach
+            <div id="comments">
+                @foreach ($post->comments as $comment)
+                    <div class="border-b mb-4 pb-2 comment">
+                        <p class="font-bold">{{ $comment->user->name }}</p>
+                        <p>{{ $comment->body }}</p>
+                        <p class="text-gray-600">{{ $comment->created_at->format('M d, Y h:i A') }}</p>
+                    </div>
+                @endforeach
+            </div>
 
-            <form action="{{ route('comments.store', $post->id) }}" method="POST" class="mt-6">
+            <form id="comment-form" class="mt-6">
                 @csrf
                 <div class="mb-4">
                     <label for="body" class="block text-sm font-medium text-gray-700">Comment</label>
@@ -62,6 +61,56 @@
             </form>
         </div>
     </div>
+
+    <script>
+        document.getElementById('like-button').addEventListener('click', function() {
+            axios.post('{{ route('likes.store', $post->id) }}', {
+                _token: '{{ csrf_token() }}'
+            })
+            .then(response => {
+                const likeCount = document.getElementById('like-count');
+                const button = document.getElementById('like-button');
+
+                if (response.data.action === 'liked') {
+                    likeCount.innerText = parseInt(likeCount.innerText) + 1 + ' Likes';
+                    button.innerText = 'Unlike';
+                    button.classList.remove('bg-blue-500');
+                    button.classList.add('bg-red-500');
+                } else {
+                    likeCount.innerText = parseInt(likeCount.innerText) - 1 + ' Likes';
+                    button.innerText = 'Like';
+                    button.classList.remove('bg-red-500');
+                    button.classList.add('bg-blue-500');
+                }
+            })
+            .catch(error => {
+                console.error('Error liking the post:', error);
+            });
+        });
+
+        document.getElementById('comment-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const body = document.getElementById('body').value;
+
+            axios.post('{{ route('comments.store', $post->id) }}', {
+                _token: '{{ csrf_token() }}',
+                body: body
+            })
+            .then(response => {
+                const commentsDiv = document.getElementById('comments');
+                const newComment = document.createElement('div');
+                newComment.classList.add('border-b', 'mb-4', 'pb-2', 'comment');
+                newComment.innerHTML = `<p class="font-bold">${response.data.user_name}</p>
+                                        <p>${response.data.body}</p>
+                                        <p class="text-gray-600">${response.data.created_at}</p>`;
+                commentsDiv.prepend(newComment);
+                document.getElementById('body').value = '';
+            })
+            .catch(error => {
+                console.error('Error submitting comment:', error);
+            });
+        });
+    </script>
 </body>
 
 </html>
