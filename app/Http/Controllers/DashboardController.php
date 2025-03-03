@@ -3,20 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
-
-        switch ($user->role) {
-            case 'admin':
-                return redirect()->route('admin.dashboard');
-            case 'author':
-                return redirect()->route('author.dashboard');
-            case 'user':
-                return redirect()->route('user.dashboard');
-        }
+        $user = Auth::user();
+        return view('dashboard', compact('user'));
     }
 }
