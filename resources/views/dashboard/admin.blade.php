@@ -3,10 +3,7 @@
     <form action="{{ route('categories.store') }}" method="POST">
         @csrf
         <div class="mb-4">
-            <label for="name" class="block text-sm font-medium text-gray-700">Category Name</label>
-            <input type="text" id="name" name="name" required
-                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500"
-                placeholder="Enter category name">
+            <x-textbox name="category_name" placeholder="Enter category name" label="Category Name" required="true" />
         </div>
         <div class="mb-4">
             <label for="description" class="block text-sm font-medium text-gray-700">Description (optional)</label>
