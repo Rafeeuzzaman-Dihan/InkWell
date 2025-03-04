@@ -39,7 +39,7 @@ class PostController extends Controller
             'user_id' => Auth::id(),
         ]);
 
-        return redirect()->route('author.dashboard')->with('success', 'Post created successfully!');
+        return redirect()->route('dashboard')->with('success', 'Post created successfully!');
     }
 
     public function show(Post $post)
