@@ -10,7 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,7 +21,11 @@ Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
-Route::get('/admin', [UserManagementController::class, 'index'])->name('admin.users');
+Route::prefix('admin')->group(function () {
+    Route::get('user', [UserController::class, 'index'])->name('users.index');
+    Route::get('user/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::delete('user/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');

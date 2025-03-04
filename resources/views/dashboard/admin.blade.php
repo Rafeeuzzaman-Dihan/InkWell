@@ -24,11 +24,18 @@
         </div>
         <div class="mb-4">
             <label for="description" class="block text-sm font-medium text-gray-700">Description (Optional)</label>
-            <textarea name="description" id="description" rows="4" 
+            <textarea name="description" id="description" rows="4"
                 class="mt-1 p-2 border border-gray-300 rounded-md w-full"></textarea>
         </div>
         <button type="submit"
             class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">Create
             Category</button>
     </form>
+
+    <!-- User Management Button -->
+    <div class="mt-4">
+        <a href="{{ url('admin/user') }}" class="inline-block bg-gray-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-600 transition duration-200">
+            User Management
+        </a>
+    </div>
 </section>
