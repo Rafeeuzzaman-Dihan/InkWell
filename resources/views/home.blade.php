@@ -11,38 +11,43 @@
 <body class="bg-gray-100">
     @include('components.navbar')
 
-    <div class="container mx-auto py-10">
-        <h2 class="text-center text-3xl font-bold mb-8">All Posts</h2>
+    <div class="bg-gray-100 md:px-10 px-4 py-12">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-center text-3xl font-extrabold text-gray-800 mb-8">Latest Posts</h2>
 
-        @if ($posts->isEmpty())
-            <p class="text-center text-gray-600">No posts available.</p>
-        @else
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                @foreach ($posts as $post)
-                <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                    @if ($post->image)
-                        <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image" class="w-full h-48 object-cover">
-                    @endif
+            @if ($posts->isEmpty())
+                <p class="text-center text-gray-600">No posts available.</p>
+            @else
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-sm:gap-8">
+                    @foreach ($posts as $post)
+                    <div class="bg-white rounded overflow-hidden shadow-md flex flex-col">
+                        @if ($post->image)
+                            <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image" class="w-full h-52 object-cover" />
+                        @endif
 
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">{{ $post->title }}</h3>
-                        <p class="text-gray-600 text-sm mb-4">{{ Str::limit($post->content, 100) }}</p>
+                        <div class="p-6 flex-1">
+                            <h3 class="text-lg font-bold text-gray-800 mb-3">{{ $post->title }}</h3>
+                            <p class="text-gray-500 text-sm mb-4">{{ Str::limit($post->content, 100) }}</p>
 
-                        <div class=" flex justify-between text-red-900 text-sm mb-4">
-                            <p>
-                                <strong>{{ $post->likes->count() }}</strong> Likes
-                            </p>
-                            <p>
-                                <strong>{{ $post->comments->count() }}</strong> Comments
-                            </p>
+                            <div class="flex justify-between text-red-900 text-sm mb-4">
+                                <p>
+                                    <strong>{{ $post->likes->count() }}</strong> Likes
+                                </p>
+                                <p>
+                                    <strong>{{ $post->comments->count() }}</strong> Comments
+                                </p>
+                            </div>
                         </div>
 
-                        <a href="{{ route('posts.show', $post->id) }}" class="text-blue-500 hover:underline">Read More</a>
+                        <div class="flex justify-between items-center p-6">
+                            <a href="{{ route('posts.show', $post->id) }}" class="inline-block px-4 py-2 rounded bg-orange-500 hover:bg-orange-600 text-white text-[13px]">Read More</a>
+                            <p class="text-gray-600 text-sm">{{ $post->created_at->format('M d, Y h:i A') }}</p>
+                        </div>
                     </div>
+                    @endforeach
                 </div>
-                @endforeach
-            </div>
-        @endif
+            @endif
+        </div>
     </div>
 </body>
 
