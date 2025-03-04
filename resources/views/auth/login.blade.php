@@ -13,10 +13,12 @@
         <div class="grid md:grid-cols-2 items-center gap-10 max-w-6xl w-full">
             <div>
                 <h2 class="lg:text-5xl text-3xl font-extrabold lg:leading-[55px] text-gray-800">
-                    Seamless Login for Exclusive Access
+                    Welcome Back to InkWell: Your Blogging Community Awaits!
                 </h2>
-                <p class="text-sm mt-6 text-gray-800">Immerse yourself in a hassle-free login journey with our intuitively designed login form. Effortlessly access your account.</p>
-                <p class="text-sm mt-12 text-gray-800">Don't have an account? <a href="javascript:void(0);" class="text-blue-600 font-semibold hover:underline ml-1">Register here</a></p>
+                <p class="text-sm mt-6 text-gray-800">
+                    Dive back into your creative space with InkWell. Our user-friendly login allows you to effortlessly manage your posts, engage with readers, and explore a world of ideas.
+                </p>
+                <p class="text-sm mt-12 text-gray-800">Don't have an account? <a href="register" class="text-blue-600 font-semibold hover:underline ml-1">Register here</a></p>
             </div>
 
             <form action="{{ route('login') }}" method="POST" class="bg-white shadow-md rounded-lg p-8 w-full">
@@ -36,10 +38,10 @@
 
                 <div class="space-y-4">
                     <div>
-                        <x-textbox name="email" placeholder="Enter your email" label="Email" type="email" required="true" />
+                        <x-textbox name="email" placeholder="Enter your email" type="email" required="true" />
                     </div>
                     <div>
-                        <x-textbox name="password" placeholder="Enter your password" label="Password" type="password" required="true" />
+                        <x-textbox name="password" placeholder="Enter your password" type="password" required="true" />
                     </div>
                     <div class="flex items-center justify-between gap-4">
                         <div class="flex items-center">
@@ -49,14 +51,14 @@
                             </label>
                         </div>
                         <div class="text-sm">
-                            <a href="javascript:void(0);" class="text-blue-600 hover:text-blue-500 font-semibold">
+                            <a href="#" class="text-blue-600 hover:text-blue-500 font-semibold">
                                 Forgot your password?
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <div class="!mt-8">
+                <div class="mt-8">
                     <button type="submit" class="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
                         Log in
                     </button>
