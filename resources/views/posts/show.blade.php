@@ -26,7 +26,11 @@
             </div>
 
             <div class="text-sm text-gray-500 mb-4">
-                <p>Category: {{ $post->category }}</p>
+                <p>Categories:
+                    @foreach ($post->categories as $category)
+                        {{ $category->name }}@if (!$loop->last), @endif
+                    @endforeach
+                </p>
                 <p>Posted by: {{ $post->user->name }}</p>
                 <p>Posted on: {{ $post->created_at->format('M d, Y h:i A') }}</p>
             </div>
