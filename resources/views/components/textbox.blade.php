@@ -1,6 +1,5 @@
 <div class="mb-4">
-    <label for="{{ $id }}" class="block text-gray-700">{{ $label }}</label>
     <input type="{{ $type }}" name="{{ $name }}" id="{{ $id }}" placeholder="{{ $placeholder }}"
-        class="mt-1 block w-full border border-black rounded-lg p-2 focus:outline-blue-900 {{ $class }}"
+        class="bg-gray-100 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-blue-600 focus:bg-transparent {{ $class }}"
         {{ $required ? 'required' : '' }}>
 </div>
