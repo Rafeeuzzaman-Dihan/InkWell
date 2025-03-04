@@ -31,19 +31,21 @@ class PostController extends Controller
             $imagePath = $request->file('image')->store('images', 'public');
         }
 
-        Post::create([
+        $post = Post::create([
             'title' => $request->title,
             'content' => $request->content,
-            'category' => implode(',', $request->categories),
             'image' => $imagePath,
             'user_id' => Auth::id(),
         ]);
+
+        $post->categories()->attach($request->categories);
 
         return redirect()->route('dashboard')->with('success', 'Post created successfully!');
     }
 
     public function show(Post $post)
     {
+        $post->load('categories'); 
         return view('posts.show', compact('post'));
     }
 
