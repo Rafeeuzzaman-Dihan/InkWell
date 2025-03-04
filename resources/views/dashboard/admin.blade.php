@@ -6,10 +6,9 @@
             <x-textbox name="category_name" placeholder="Enter category name" label="Category Name" required="true" />
         </div>
         <div class="mb-4">
-            <label for="description" class="block text-sm font-medium text-gray-700">Description (optional)</label>
-            <textarea id="description" name="description" rows="4"
-                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500"
-                placeholder="Enter category description"></textarea>
+            <label for="description" class="block text-sm font-medium text-gray-700">Description (Optional)</label>
+            <textarea name="description" id="description" rows="4" required
+                class="mt-1 p-2 border border-gray-300 rounded-md w-full"></textarea>
         </div>
         <button type="submit"
             class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">Create
