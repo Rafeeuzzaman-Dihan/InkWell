@@ -1,13 +1,30 @@
 <section class="bg-white shadow-md rounded-lg p-4 mb-8">
     <h2 class="text-xl font-semibold mb-4">Add Category</h2>
+
+    @if(session('success'))
+        <div class="bg-green-500 text-white p-4 rounded-lg mb-4">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="bg-red-500 text-white p-4 rounded-lg mb-4">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('categories.store') }}" method="POST">
         @csrf
         <div class="mb-4">
-            <x-textbox name="category_name" placeholder="Enter category name" label="Category Name" required="true" />
+            <x-textbox name="name" placeholder="Enter category name" label="Category Name" required="true" />
         </div>
         <div class="mb-4">
             <label for="description" class="block text-sm font-medium text-gray-700">Description (Optional)</label>
-            <textarea name="description" id="description" rows="4" required
+            <textarea name="description" id="description" rows="4" 
                 class="mt-1 p-2 border border-gray-300 rounded-md w-full"></textarea>
         </div>
         <button type="submit"

@@ -19,6 +19,6 @@ class CategoryController extends Controller
         $category->description = $request->description;
         $category->save(); 
 
-        return redirect()->back()->with('success', 'Category created successfully!');
+        return redirect()->route('dashboard')->with('success', 'Category created successfully!');
     }
 }
