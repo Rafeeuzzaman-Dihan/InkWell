@@ -3,9 +3,7 @@
         <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-4">
-                <label for="title" class="block text-sm font-medium text-gray-700">Post Title</label>
-                <input type="text" id="title" name="title" placeholder="Enter post title" required
-                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500" value="{{ old('title') }}">
+                <x-textbox name="title" placeholder="Enter Title" value="{{ old('title') }}" />
             </div>
             <div class="mb-4">
                 <label for="categories" class="block text-sm font-medium text-gray-700">Categories</label>
@@ -18,9 +16,8 @@
             </div>
             <div class="mb-4">
                 <label for="content" class="block text-sm font-medium text-gray-700">Content</label>
-                <textarea id="content" name="content" rows="4" required
-                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500"
-                    placeholder="Write your post content here...">{{ old('content') }}</textarea>
+                <textarea name="description" id="description" rows="4" placeholder="Write your content here..." value="{{ old('title') }}" required
+                class="mt-1 p-2 border border-gray-300 rounded-md w-full"></textarea>
             </div>
             <div class="mb-4">
                 <label for="image" class="block text-sm font-medium text-gray-700">Image (optional)</label>
