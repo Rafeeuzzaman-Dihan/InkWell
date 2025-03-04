@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="flex justify-between items-center p-6">
-                            <a href="{{ route('posts.show', $post->id) }}" class="inline-block px-4 py-2 rounded bg-orange-500 hover:bg-orange-600 text-white text-[13px]">Read More</a>
+                            <a href="{{ route('posts.show', $post->id) }}" class="inline-block px-4 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white text-[13px]">Read More</a>
                             <p class="text-gray-600 text-sm">{{ $post->created_at->format('M d, Y h:i A') }}</p>
                         </div>
                     </div>
