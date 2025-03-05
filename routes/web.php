@@ -16,11 +16,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Authentication Routes
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
+// Admin Routes
 Route::middleware(['auth', 'check.admin'])->prefix('admin')->group(function () {
     // User Management Routes
     Route::get('user', [UserController::class, 'index'])->name('users.index');
@@ -37,6 +39,8 @@ Route::middleware(['auth', 'check.admin'])->prefix('admin')->group(function () {
     Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 });
 
+
+// Author Routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -44,18 +48,21 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile/edit', [UserProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [UserProfileController::class, 'update'])->name('profile.update');
 
+    // Category Management
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
-    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
-    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
     // Author Post Management Routes
     Route::get('/my-posts', [PostController::class, 'myPosts'])->name('posts.my');
-    Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->middleware('check.post.author')->name('posts.edit');
-    Route::put('/posts/{post}', [PostController::class, 'update'])->middleware('check.post.author')->name('posts.update');
-    Route::delete('/posts/{post}', [PostController::class, 'destroy'])->middleware('check.post.author')->name('posts.destroy');
+    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+
+    // Route::middleware('check.post.author')->group(function (){
+    //     Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
+    //     Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
+    //     Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+    // });
 
     Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
-
     Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::post('/posts/{post}/likes', [LikeController::class, 'store'])->name('likes.store');
     Route::delete('/posts/{post}/likes', [LikeController::class, 'destroy'])->name('likes.destroy');
