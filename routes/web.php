@@ -21,10 +21,10 @@ Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
-Route::prefix('admin')->group(function () {
+Route::middleware(['auth', 'check.admin'])->prefix('admin')->group(function () {
     Route::get('user', [UserController::class, 'index'])->name('users.index');
     Route::get('user/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('user/{id}', [UserController::class, 'update'])->name('users.update'); 
+    Route::put('user/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('user/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 });
 
