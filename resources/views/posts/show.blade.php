@@ -37,9 +37,10 @@
 
             <div class="flex items-center mb-4">
                 <button id="like-button" class="mr-4
-                    {{ $post->likes->contains('user_id', Auth::id()) ? 'bg-red-500' : 'bg-blue-500' }}
-                    text-white px-4 py-2 rounded-md flex items-center">
-                    <i class="fas {{ $post->likes->contains('user_id', Auth::id()) ? 'fa-thumbs-down' : 'fa-thumbs-up' }}"></i>
+                    {{ $post->likes->contains('user_id', Auth::id()) ? 'bg-blue-500' : 'bg-gray-300' }}
+                    text-white px-4 py-2 rounded-md flex items-center transition duration-300">
+                    <i
+                        class="fas fa-thumbs-up {{ $post->likes->contains('user_id', Auth::id()) ? 'text-white' : 'text-gray-700' }}"></i>
                 </button>
                 <p id="like-count" class="text-sm text-gray-600">{{ $post->likes->count() }} Likes</p>
             </div>
@@ -79,16 +80,16 @@
 
                     if (response.data.action === 'liked') {
                         likeCount.innerText = parseInt(likeCount.innerText) + 1 + ' Likes';
-                        button.querySelector('i').classList.remove('fa-thumbs-up');
-                        button.querySelector('i').classList.add('fa-thumbs-down');
-                        button.classList.remove('bg-blue-500');
-                        button.classList.add('bg-red-500');
+                        button.classList.remove('bg-gray-300');
+                        button.classList.add('bg-blue-500');
+                        button.querySelector('i').classList.remove('text-gray-700');
+                        button.querySelector('i').classList.add('text-white');
                     } else {
                         likeCount.innerText = parseInt(likeCount.innerText) - 1 + ' Likes';
-                        button.querySelector('i').classList.remove('fa-thumbs-down');
-                        button.querySelector('i').classList.add('fa-thumbs-up');
-                        button.classList.remove('bg-red-500');
-                        button.classList.add('bg-blue-500');
+                        button.classList.remove('bg-blue-500');
+                        button.classList.add('bg-gray-300');
+                        button.querySelector('i').classList.remove('text-white');
+                        button.querySelector('i').classList.add('text-gray-700');
                     }
                 })
                 .catch(error => {
