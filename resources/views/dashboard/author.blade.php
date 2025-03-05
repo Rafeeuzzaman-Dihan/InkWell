@@ -21,12 +21,12 @@
         @csrf
 
         <div class="mb-4">
-            <x-textbox name="title" placeholder="Enter your post title" 
+            <x-textbox name="title" placeholder="Enter your post title"
                 value="{{ old('title') }}" />
         </div>
 
         <div class="mb-4">
-            <select id="categories" name="categories[]" multiple="multiple" 
+            <select id="categories" name="categories[]" multiple="multiple"
                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500">
                 @foreach($categories as $category)
                     <option value="{{ $category->id }}" {{ in_array($category->id, old('categories', [])) ? 'selected' : '' }}>
@@ -48,6 +48,9 @@
         </div>
 
         <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">Create New Post</button>
+
+        <a href="{{ route('posts.my') }}" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">Manage My Posts</a>
+        
     </form>
 </section>
 </div>

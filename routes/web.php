@@ -48,8 +48,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
+    // Author Post Management Routes
+    Route::get('/my-posts', [PostController::class, 'myPosts'])->name('posts.my');
+    Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->middleware('check.post.author')->name('posts.edit');
+    Route::put('/posts/{post}', [PostController::class, 'update'])->middleware('check.post.author')->name('posts.update');
+    Route::delete('/posts/{post}', [PostController::class, 'destroy'])->middleware('check.post.author')->name('posts.destroy');
+
     Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
-    
+
     Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::post('/posts/{post}/likes', [LikeController::class, 'store'])->name('likes.store');
     Route::delete('/posts/{post}/likes', [LikeController::class, 'destroy'])->name('likes.destroy');

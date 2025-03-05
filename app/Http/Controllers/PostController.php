@@ -89,6 +89,12 @@ class PostController extends Controller
         return redirect()->route('dashboard')->with('success', 'Post deleted successfully!');
     }
 
+    public function myPosts()
+    {
+        $posts = Post::where('user_id', Auth::id())->with('categories')->get();
+        return view('posts.my_posts', compact('posts'));
+    }
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
