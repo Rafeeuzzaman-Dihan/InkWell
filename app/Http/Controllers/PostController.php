@@ -19,7 +19,7 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        return view('posts.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -51,21 +51,21 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::with('categories')->get(); 
-        return view('admin.posts.index', compact('posts'));
+        $posts = Post::with('categories')->get();
+        return view('posts.index', compact('posts'));
     }
 
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        return view('posts.edit', compact('post', 'categories'));
     }
 
     public function update(Request $request, Post $post)
     {
         $this->validator($request->all())->validate();
 
-        $imagePath = $post->image; 
+        $imagePath = $post->image;
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images', 'public');
         }
@@ -76,7 +76,7 @@ class PostController extends Controller
             'image' => $imagePath,
         ]);
 
-        $post->categories()->sync($request->categories); 
+        $post->categories()->sync($request->categories);
 
         return redirect()->route('dashboard')->with('success', 'Post updated successfully!');
     }

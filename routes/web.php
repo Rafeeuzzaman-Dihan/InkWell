@@ -22,16 +22,18 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
 Route::middleware(['auth', 'check.admin'])->prefix('admin')->group(function () {
+    // User Management Routes
     Route::get('user', [UserController::class, 'index'])->name('users.index');
     Route::get('user/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('user/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('user/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
-    Route::get('posts', [PostController::class, 'index'])->name('posts.index'); 
-    Route::get('posts/create', [PostController::class, 'create'])->name('posts.create'); 
-    Route::post('posts', [PostController::class, 'store'])->name('posts.store'); 
-    Route::get('posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit'); 
-    Route::put('posts/{post}', [PostController::class, 'update'])->name('posts.update'); 
+    // Admin Post Management Routes
+    Route::get('posts', [PostController::class, 'index'])->name('posts.index');
+    Route::get('posts/create', [PostController::class, 'create'])->name('posts.create');
+    Route::post('posts', [PostController::class, 'store'])->name('posts.store');
+    Route::get('posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
+    Route::put('posts/{post}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 });
 
@@ -45,7 +47,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+
     Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+    
     Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::post('/posts/{post}/likes', [LikeController::class, 'store'])->name('likes.store');
     Route::delete('/posts/{post}/likes', [LikeController::class, 'destroy'])->name('likes.destroy');
