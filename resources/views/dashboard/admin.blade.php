@@ -31,8 +31,6 @@
             class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">Create
             Category</button>
     </form>
-
-    <!-- User Management Button -->
     <div class="mt-4">
         <a href="{{ url('admin/user') }}" class="inline-block bg-gray-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-600 transition duration-200">
             User Management

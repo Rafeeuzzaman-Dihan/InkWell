@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Management</title>
     @vite('resources/css/app.css')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 </head>
 
 <body class="bg-gray-100">
@@ -22,7 +21,6 @@
         @endif
 
         <table class="min-w-full bg-white shadow-md rounded-lg">
-            <thead>
                 <tr>
                     <th class="py-2 px-4 border-b">ID</th>
                     <th class="py-2 px-4 border-b">Name</th>
@@ -30,7 +28,6 @@
                     <th class="py-2 px-4 border-b">Role</th>
                     <th class="py-2 px-4 border-b">Actions</th>
                 </tr>
-            </thead>
             <tbody>
                 @foreach($users as $user)
                     <tr>
