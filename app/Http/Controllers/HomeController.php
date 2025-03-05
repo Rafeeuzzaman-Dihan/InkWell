@@ -11,13 +11,12 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $categories = Category::all();
-
         $selectedCategory = $request->input('category');
         $posts = Post::when($selectedCategory, function ($query) use ($selectedCategory) {
             return $query->whereHas('categories', function ($query) use ($selectedCategory) {
                 $query->where('categories.id', $selectedCategory);
             });
-        })->latest()->get();
+        })->latest()->paginate(10); 
 
         return view('home', compact('posts', 'categories', 'selectedCategory'));
     }

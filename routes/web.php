@@ -12,9 +12,11 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Public Route for Home
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Public Route for Viewing a Specific Post
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
 // Authentication Routes
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
@@ -39,10 +41,8 @@ Route::middleware(['auth', 'check.admin'])->prefix('admin')->group(function () {
     Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 });
 
-
 // Author Routes
 Route::middleware(['auth'])->group(function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile/edit', [UserProfileController::class, 'edit'])->name('profile.edit');
@@ -56,13 +56,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
-    // Route::middleware('check.post.author')->group(function (){
-    //     Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
-    //     Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
-    //     Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
-    // });
-
-    Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
     Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::post('/posts/{post}/likes', [LikeController::class, 'store'])->name('likes.store');
     Route::delete('/posts/{post}/likes', [LikeController::class, 'destroy'])->name('likes.destroy');
