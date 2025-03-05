@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 <nav class="bg-gray-800 p-4 shadow-md">
     <div class="container mx-auto flex justify-between items-center">
         <div>
