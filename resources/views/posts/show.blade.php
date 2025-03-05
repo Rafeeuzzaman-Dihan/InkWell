@@ -40,7 +40,6 @@
                     {{ $post->likes->contains('user_id', Auth::id()) ? 'bg-red-500' : 'bg-blue-500' }}
                     text-white px-4 py-2 rounded-md flex items-center">
                     <i class="fas {{ $post->likes->contains('user_id', Auth::id()) ? 'fa-thumbs-down' : 'fa-thumbs-up' }}"></i>
-                    <span class="ml-2">{{ $post->likes->contains('user_id', Auth::id()) ? 'Unlike' : 'Like' }}</span>
                 </button>
                 <p id="like-count" class="text-sm text-gray-600">{{ $post->likes->count() }} Likes</p>
             </div>

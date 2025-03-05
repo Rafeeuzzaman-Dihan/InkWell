@@ -29,8 +29,6 @@ class LikeController extends Controller
                 ->where('user_id', Auth::id())
                 ->first();
             $like->delete();
-
-            return response()->json(['action' => 'unliked']);
         }
     }
 
@@ -44,7 +42,6 @@ class LikeController extends Controller
 
         if ($like) {
             $like->delete();
-            return response()->json(['action' => 'unliked']);
         }
 
         return response()->json(['action' => 'not_found']);
