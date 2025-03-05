@@ -26,6 +26,13 @@ Route::middleware(['auth', 'check.admin'])->prefix('admin')->group(function () {
     Route::get('user/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('user/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('user/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    Route::get('posts', [PostController::class, 'index'])->name('posts.index'); 
+    Route::get('posts/create', [PostController::class, 'create'])->name('posts.create'); 
+    Route::post('posts', [PostController::class, 'store'])->name('posts.store'); 
+    Route::get('posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit'); 
+    Route::put('posts/{post}', [PostController::class, 'update'])->name('posts.update'); 
+    Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 });
 
 Route::middleware(['auth'])->group(function () {

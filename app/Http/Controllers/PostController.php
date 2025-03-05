@@ -19,7 +19,7 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('posts.create', compact('categories'));
+        return view('admin.posts.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -45,8 +45,48 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        $post->load('categories'); 
+        $post->load('categories');
         return view('posts.show', compact('post'));
+    }
+
+    public function index()
+    {
+        $posts = Post::with('categories')->get(); 
+        return view('admin.posts.index', compact('posts'));
+    }
+
+    public function edit(Post $post)
+    {
+        $categories = Category::all();
+        return view('admin.posts.edit', compact('post', 'categories'));
+    }
+
+    public function update(Request $request, Post $post)
+    {
+        $this->validator($request->all())->validate();
+
+        $imagePath = $post->image; 
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public');
+        }
+
+        $post->update([
+            'title' => $request->title,
+            'content' => $request->content,
+            'image' => $imagePath,
+        ]);
+
+        $post->categories()->sync($request->categories); 
+
+        return redirect()->route('dashboard')->with('success', 'Post updated successfully!');
+    }
+
+    public function destroy(Post $post)
+    {
+
+        $post->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Post deleted successfully!');
     }
 
     protected function validator(array $data)
