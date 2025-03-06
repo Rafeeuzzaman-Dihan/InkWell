@@ -28,4 +28,36 @@ class CommentController extends Controller
             'created_at' => $comment->created_at->format('M d, Y h:i A')
         ]);
     }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate(['body' => 'required|string']);
+        $comment = Comment::findOrFail($id);
+
+        // Check if the user is authorized to update the comment
+        if ($comment->user_id !== Auth::id()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        $comment->update($request->only('body'));
+
+        return response()->json([
+            'body' => $comment->body,
+            'updated_at' => $comment->updated_at->format('M d, Y h:i A')
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $comment = Comment::findOrFail($id);
+
+        // Check if the user is authorized to delete the comment
+        if ($comment->user_id !== Auth::id()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        $comment->delete();
+
+        return response()->json(['message' => 'Comment deleted successfully.']);
+    }
 }

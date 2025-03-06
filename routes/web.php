@@ -11,7 +11,6 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserController;
-use App\Models\Category;
 
 // Public Route for Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -41,7 +40,7 @@ Route::middleware(['auth', 'check.admin'])->prefix('admin')->group(function () {
     Route::put('posts/{post}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
-    //Admin Category Management Routes
+    // Admin Category Management Routes
     Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('categories/{id}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
     Route::put('categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
@@ -63,7 +62,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
+    // Comment Management Routes
     Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+
+    // Like Management Routes
     Route::post('/posts/{post}/likes', [LikeController::class, 'store'])->name('likes.store');
     Route::delete('/posts/{post}/likes', [LikeController::class, 'destroy'])->name('likes.destroy');
 });

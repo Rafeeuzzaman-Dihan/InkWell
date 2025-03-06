@@ -49,10 +49,20 @@
 
             <div id="comments">
                 @foreach ($post->comments as $comment)
-                    <div class="border-b mb-4 pb-2 comment">
+                    <div class="border-b mb-4 pb-2 comment" id="comment-{{ $comment->id }}">
                         <p class="font-bold">{{ $comment->user->name }}</p>
-                        <p>{{ $comment->body }}</p>
+                        <p class="comment-body" id="comment-body-{{ $comment->id }}">{{ $comment->body }}</p>
                         <p class="text-gray-600">{{ $comment->created_at->format('M d, Y h:i A') }}</p>
+                        @if ($comment->user_id === Auth::id())
+                            <button class="text-blue-500 edit-comment" data-id="{{ $comment->id }}">Edit</button>
+                            <button class="text-red-500 delete-comment" data-id="{{ $comment->id }}">Delete</button>
+                        @endif
+
+                        <div class="hidden mt-2 edit-form" id="edit-form-{{ $comment->id }}">
+                            <textarea class="border p-2 w-full" id="edit-body-{{ $comment->id }}">{{ $comment->body }}</textarea>
+                            <button class="bg-blue-500 text-white update-comment" data-id="{{ $comment->id }}">Update</button>
+                            <button class="bg-gray-500 text-white cancel-edit" data-id="{{ $comment->id }}">Cancel</button>
+                        </div>
                     </div>
                 @endforeach
             </div>
@@ -61,8 +71,7 @@
                 @csrf
                 <div class="mb-4">
                     <label for="body" class="block text-sm font-medium text-gray-700">Comment</label>
-                    <textarea name="body" id="body" rows="4" required
-                        class="mt-1 p-2 border border-gray-300 rounded-md w-full"></textarea>
+                    <textarea name="body" id="body" rows="4" required class="mt-1 p-2 border border-gray-300 rounded-md w-full"></textarea>
                 </div>
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Submit</button>
             </form>
@@ -70,32 +79,86 @@
     </div>
 
     <script>
+        document.querySelectorAll('.edit-comment').forEach(button => {
+            button.addEventListener('click', function() {
+                const commentId = this.getAttribute('data-id');
+                document.getElementById(`comment-body-${commentId}`).classList.add('hidden');
+                document.getElementById(`edit-form-${commentId}`).classList.remove('hidden');
+            });
+        });
+
+        document.querySelectorAll('.cancel-edit').forEach(button => {
+            button.addEventListener('click', function() {
+                const commentId = this.getAttribute('data-id');
+                document.getElementById(`comment-body-${commentId}`).classList.remove('hidden');
+                document.getElementById(`edit-form-${commentId}`).classList.add('hidden');
+            });
+        });
+
+        document.querySelectorAll('.update-comment').forEach(button => {
+            button.addEventListener('click', function() {
+                const commentId = this.getAttribute('data-id');
+                const body = document.getElementById(`edit-body-${commentId}`).value;
+
+                axios.put(`/comments/${commentId}`, {
+                    _token: '{{ csrf_token() }}',
+                    body: body
+                })
+                .then(response => {
+                    document.getElementById(`comment-body-${commentId}`).innerText = body;
+                    document.getElementById(`comment-body-${commentId}`).classList.remove('hidden');
+                    document.getElementById(`edit-form-${commentId}`).classList.add('hidden');
+                })
+                .catch(error => {
+                    console.error('Error updating comment:', error);
+                });
+            });
+        });
+
+        document.querySelectorAll('.delete-comment').forEach(button => {
+            button.addEventListener('click', function() {
+                const commentId = this.getAttribute('data-id');
+
+                axios.delete(`/comments/${commentId}`, {
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => {
+                    document.getElementById(`comment-${commentId}`).remove();
+                })
+                .catch(error => {
+                    console.error('Error deleting comment:', error);
+                });
+            });
+        });
+
         document.getElementById('like-button').addEventListener('click', function () {
             @auth
                 axios.post('{{ route('likes.store', $post->id) }}', {
                     _token: '{{ csrf_token() }}'
                 })
-                    .then(response => {
-                        const likeCount = document.getElementById('like-count');
-                        const button = document.getElementById('like-button');
+                .then(response => {
+                    const likeCount = document.getElementById('like-count');
+                    const button = document.getElementById('like-button');
 
-                        if (response.data.action === 'liked') {
-                            likeCount.innerText = parseInt(likeCount.innerText) + 1 + ' Likes';
-                            button.classList.remove('bg-gray-300');
-                            button.classList.add('bg-blue-500');
-                            button.querySelector('i').classList.remove('text-gray-700');
-                            button.querySelector('i').classList.add('text-white');
-                        } else {
-                            likeCount.innerText = parseInt(likeCount.innerText) - 1 + ' Likes';
-                            button.classList.remove('bg-blue-500');
-                            button.classList.add('bg-gray-300');
-                            button.querySelector('i').classList.remove('text-white');
-                            button.querySelector('i').classList.add('text-gray-700');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error liking the post:', error);
-                    });
+                    if (response.data.action === 'liked') {
+                        likeCount.innerText = parseInt(likeCount.innerText) + 1 + ' Likes';
+                        button.classList.remove('bg-gray-300');
+                        button.classList.add('bg-blue-500');
+                        button.querySelector('i').classList.remove('text-gray-700');
+                        button.querySelector('i').classList.add('text-white');
+                    } else {
+                        likeCount.innerText = parseInt(likeCount.innerText) - 1 + ' Likes';
+                        button.classList.remove('bg-blue-500');
+                        button.classList.add('bg-gray-300');
+                        button.querySelector('i').classList.remove('text-white');
+                        button.querySelector('i').classList.add('text-gray-700');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error liking the post:', error);
+                });
             @else
                 window.location.href = '{{ route('login') }}';
             @endauth
@@ -110,19 +173,19 @@
                     _token: '{{ csrf_token() }}',
                     body: body
                 })
-                    .then(response => {
-                        const commentsDiv = document.getElementById('comments');
-                        const newComment = document.createElement('div');
-                        newComment.classList.add('border-b', 'mb-4', 'pb-2', 'comment');
-                        newComment.innerHTML = `<p class="font-bold">${response.data.user_name}</p>
+                .then(response => {
+                    const commentsDiv = document.getElementById('comments');
+                    const newComment = document.createElement('div');
+                    newComment.classList.add('border-b', 'mb-4', 'pb-2', 'comment');
+                    newComment.innerHTML = `<p class="font-bold">${response.data.user_name}</p>
                                             <p>${response.data.body}</p>
                                             <p class="text-gray-600">${response.data.created_at}</p>`;
-                        commentsDiv.prepend(newComment);
-                        document.getElementById('body').value = '';
-                    })
-                    .catch(error => {
-                        console.error('Error submitting comment:', error);
-                    });
+                    commentsDiv.prepend(newComment);
+                    document.getElementById('body').value = '';
+                })
+                .catch(error => {
+                    console.error('Error submitting comment:', error);
+                });
             @else
                 window.location.href = '{{ route('login') }}';
             @endauth
