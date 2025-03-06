@@ -17,9 +17,11 @@
             <div class="mb-6">
                 <form method="GET" action="{{ route('home') }}">
                     <div class="flex space-x-4">
-                        <button type="submit" name="category" value="" class="px-4 py-2 border rounded {{ $selectedCategory === null ? 'bg-blue-500 text-white' : 'bg-gray-200' }}">All</button>
+                        <button type="submit" name="category" value=""
+                            class="px-4 py-2 border rounded {{ $selectedCategory === null ? 'bg-blue-500 text-white' : 'bg-gray-200' }}">All</button>
                         @foreach ($categories as $category)
-                            <button type="submit" name="category" value="{{ $category->id }}" class="px-4 py-2 border rounded {{ $selectedCategory == $category->id ? 'bg-blue-500 text-white' : 'bg-gray-200' }}">
+                            <button type="submit" name="category" value="{{ $category->id }}"
+                                class="px-4 py-2 border rounded {{ $selectedCategory == $category->id ? 'bg-blue-500 text-white' : 'bg-gray-200' }}">
                                 {{ $category->name }}
                             </button>
                         @endforeach
@@ -34,7 +36,8 @@
                     @foreach ($posts as $post)
                         <div class="bg-white rounded overflow-hidden shadow-md flex flex-col">
                             @if ($post->image)
-                                <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image" class="w-full h-52 object-cover" />
+                                <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image"
+                                    class="w-full h-52 object-cover" />
                             @endif
 
                             <div class="p-6 flex-1">
@@ -54,7 +57,9 @@
                             </div>
 
                             <div class="flex justify-between items-center p-6 -mt-6">
-                                <a href="{{ route('posts.show', $post->id) }}" class="inline-block px-4 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white text-[13px]">Read More</a>
+                                <a href="{{ route('posts.show', $post->id) }}"
+                                    class="inline-block px-4 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white text-[13px]">Read
+                                    More</a>
                                 <p class="text-gray-600 text-sm">{{ $post->created_at->format('M d, Y') }}</p>
                             </div>
                         </div>

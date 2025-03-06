@@ -12,9 +12,9 @@
     <div class="max-w-4xl max-sm:max-w-lg mx-auto p-6 h-screen flex items-center justify-center">
         <div class="bg-white shadow-md rounded-lg p-8 w-full">
             <div class="text-center mb-12">
-                <a href="javascript:void(0)">
-                    <img src="https://readymadeui.com/readymadeui.svg" alt="logo" class='w-48 inline-block' />
-                </a>
+                <h1 class="font-bold text-xl">
+                    InkWell
+                </h1>
                 <h4 class="text-blue-700 text-2xl font-bold mt-6">Create your account</h4>
             </div>
 

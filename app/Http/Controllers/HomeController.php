@@ -16,7 +16,7 @@ class HomeController extends Controller
             return $query->whereHas('categories', function ($query) use ($selectedCategory) {
                 $query->where('categories.id', $selectedCategory);
             });
-        })->latest()->paginate(10); 
+        })->latest()->paginate(6);
 
         return view('home', compact('posts', 'categories', 'selectedCategory'));
     }

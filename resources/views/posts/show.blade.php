@@ -79,60 +79,116 @@
     </div>
 
     <script>
-        document.querySelectorAll('.edit-comment').forEach(button => {
-            button.addEventListener('click', function() {
-                const commentId = this.getAttribute('data-id');
-                document.getElementById(`comment-body-${commentId}`).classList.add('hidden');
-                document.getElementById(`edit-form-${commentId}`).classList.remove('hidden');
-            });
+        // Function to add event listeners for edit and delete buttons
+        function addCommentEventListeners(commentElement) {
+            const editButton = commentElement.querySelector('.edit-comment');
+            const deleteButton = commentElement.querySelector('.delete-comment');
+            const updateButton = commentElement.querySelector('.update-comment');
+            const cancelButton = commentElement.querySelector('.cancel-edit');
+
+            // Edit button functionality
+            if (editButton) {
+                editButton.addEventListener('click', function() {
+                    const commentId = this.getAttribute('data-id');
+                    document.getElementById(`comment-body-${commentId}`).classList.add('hidden');
+                    document.getElementById(`edit-form-${commentId}`).classList.remove('hidden');
+                });
+            }
+
+            // Delete button functionality
+            if (deleteButton) {
+                deleteButton.addEventListener('click', function() {
+                    const commentId = this.getAttribute('data-id');
+
+                    axios.delete(`/comments/${commentId}`, {
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        }
+                    })
+                    .then(response => {
+                        document.getElementById(`comment-${commentId}`).remove();
+                    })
+                    .catch(error => {
+                        console.error('Error deleting comment:', error);
+                    });
+                });
+            }
+
+            // Update button functionality
+            if (updateButton) {
+                updateButton.addEventListener('click', function() {
+                    const commentId = this.getAttribute('data-id');
+                    const body = document.getElementById(`edit-body-${commentId}`).value;
+
+                    axios.put(`/comments/${commentId}`, {
+                        _token: '{{ csrf_token() }}',
+                        body: body
+                    })
+                    .then(response => {
+                        document.getElementById(`comment-body-${commentId}`).innerText = body;
+                        document.getElementById(`comment-body-${commentId}`).classList.remove('hidden');
+                        document.getElementById(`edit-form-${commentId}`).classList.add('hidden');
+                    })
+                    .catch(error => {
+                        console.error('Error updating comment:', error);
+                    });
+                });
+            }
+
+            // Cancel button functionality
+            if (cancelButton) {
+                cancelButton.addEventListener('click', function() {
+                    const commentId = this.getAttribute('data-id');
+                    document.getElementById(`comment-body-${commentId}`).classList.remove('hidden');
+                    document.getElementById(`edit-form-${commentId}`).classList.add('hidden');
+                });
+            }
+        }
+
+        // Adding event listeners for existing comments
+        document.querySelectorAll('.comment').forEach(comment => {
+            addCommentEventListeners(comment);
         });
 
-        document.querySelectorAll('.cancel-edit').forEach(button => {
-            button.addEventListener('click', function() {
-                const commentId = this.getAttribute('data-id');
-                document.getElementById(`comment-body-${commentId}`).classList.remove('hidden');
-                document.getElementById(`edit-form-${commentId}`).classList.add('hidden');
-            });
-        });
+        document.getElementById('comment-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            @auth
+                const body = document.getElementById('body').value;
 
-        document.querySelectorAll('.update-comment').forEach(button => {
-            button.addEventListener('click', function() {
-                const commentId = this.getAttribute('data-id');
-                const body = document.getElementById(`edit-body-${commentId}`).value;
-
-                axios.put(`/comments/${commentId}`, {
+                axios.post('{{ route('comments.store', $post->id) }}', {
                     _token: '{{ csrf_token() }}',
                     body: body
                 })
                 .then(response => {
-                    document.getElementById(`comment-body-${commentId}`).innerText = body;
-                    document.getElementById(`comment-body-${commentId}`).classList.remove('hidden');
-                    document.getElementById(`edit-form-${commentId}`).classList.add('hidden');
+                    const commentsDiv = document.getElementById('comments');
+                    const newComment = document.createElement('div');
+                    newComment.classList.add('border-b', 'mb-4', 'pb-2', 'comment');
+                    newComment.innerHTML = `<p class="font-bold">${response.data.user_name}</p>
+                                            <p class="comment-body" id="comment-body-${response.data.id}">${response.data.body}</p>
+                                            <p class="text-gray-600">${response.data.created_at}</p>
+                                            <button class="text-blue-500 edit-comment" data-id="${response.data.id}">Edit</button>
+                                            <button class="text-red-500 delete-comment" data-id="${response.data.id}">Delete</button>
+                                            <div class="hidden mt-2 edit-form" id="edit-form-${response.data.id}">
+                                                <textarea class="border p-2 w-full" id="edit-body-${response.data.id}">${response.data.body}</textarea>
+                                                <button class="bg-blue-500 text-white update-comment" data-id="${response.data.id}">Update</button>
+                                                <button class="bg-gray-500 text-white cancel-edit" data-id="${response.data.id}">Cancel</button>
+                                            </div>`;
+                    // Append the new comment at the bottom
+                    commentsDiv.appendChild(newComment);
+                    document.getElementById('body').value = '';
+
+                    // Add event listeners for the new buttons
+                    addCommentEventListeners(newComment);
                 })
                 .catch(error => {
-                    console.error('Error updating comment:', error);
+                    console.error('Error submitting comment:', error);
                 });
-            });
+            @else
+                window.location.href = '{{ route('login') }}';
+            @endauth
         });
 
-        document.querySelectorAll('.delete-comment').forEach(button => {
-            button.addEventListener('click', function() {
-                const commentId = this.getAttribute('data-id');
-
-                axios.delete(`/comments/${commentId}`, {
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    }
-                })
-                .then(response => {
-                    document.getElementById(`comment-${commentId}`).remove();
-                })
-                .catch(error => {
-                    console.error('Error deleting comment:', error);
-                });
-            });
-        });
-
+        // Like functionality
         document.getElementById('like-button').addEventListener('click', function () {
             @auth
                 axios.post('{{ route('likes.store', $post->id) }}', {
@@ -158,33 +214,6 @@
                 })
                 .catch(error => {
                     console.error('Error liking the post:', error);
-                });
-            @else
-                window.location.href = '{{ route('login') }}';
-            @endauth
-        });
-
-        document.getElementById('comment-form').addEventListener('submit', function (e) {
-            e.preventDefault();
-            @auth
-                const body = document.getElementById('body').value;
-
-                axios.post('{{ route('comments.store', $post->id) }}', {
-                    _token: '{{ csrf_token() }}',
-                    body: body
-                })
-                .then(response => {
-                    const commentsDiv = document.getElementById('comments');
-                    const newComment = document.createElement('div');
-                    newComment.classList.add('border-b', 'mb-4', 'pb-2', 'comment');
-                    newComment.innerHTML = `<p class="font-bold">${response.data.user_name}</p>
-                                            <p>${response.data.body}</p>
-                                            <p class="text-gray-600">${response.data.created_at}</p>`;
-                    commentsDiv.prepend(newComment);
-                    document.getElementById('body').value = '';
-                })
-                .catch(error => {
-                    console.error('Error submitting comment:', error);
                 });
             @else
                 window.location.href = '{{ route('login') }}';
