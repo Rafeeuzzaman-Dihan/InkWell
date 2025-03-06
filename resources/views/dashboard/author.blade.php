@@ -37,39 +37,31 @@
         </div>
 
         <div class="mb-4">
+            
             <label for="content" class="block text-sm font-medium text-gray-700">Content</label>
             <textarea name="content" id="content" rows="4" placeholder="Write your content here..." required
                 class="mt-1 p-2 border border-gray-300 rounded-md w-full">{{ old('content') }}</textarea>
         </div>
 
         <div class="mb-4">
-            <label for="image" class="block text-sm font-medium text-gray-700">Image (optional)</label>
-            <input type="file" id="image" name="image" accept="image/*"
-                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500">
-        </div>
-
+@@ -50,18 +51,25 @@
         <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">Create New Post</button>
 
         <a href="{{ route('posts.my') }}" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">Manage My Posts</a>
 
+
     </form>
 </section>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-<script src="https://cdn.tiny.cloud/1/45sencfmx3g291gxfyhb5fr9aaffbkqzsipryl17afz2n54r/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
 <script>
 $(document).ready(function() {
     $('#categories').select2({
         placeholder: "Select categories",
         allowClear: true
-    });
-
-    tinymce.init({
-        selector: '#content', 
-        plugins: 'lists link image preview',
-        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright | bullist numlist | link image | preview',
-        height: 300,
     });
 });
 </script>
