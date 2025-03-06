@@ -20,10 +20,6 @@
         </div>
     @endif
 
-    <a href="{{ route('posts.create') }}" class="inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200 mb-4">
-        Create New Post
-    </a>
-
     <table class="min-w-full">
         <thead>
             <tr>

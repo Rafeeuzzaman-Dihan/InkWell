@@ -34,8 +34,7 @@ Route::middleware(['auth', 'check.admin'])->prefix('admin')->group(function () {
 
     // Admin Post Management Routes (excluding edit/update)
     Route::get('posts', [PostController::class, 'index'])->name('posts.index');
-    Route::get('posts/create', [PostController::class, 'create'])->name('posts.create');
-    Route::post('posts', [PostController::class, 'store'])->name('posts.store');
+    Route::get('dashboard/author', [PostController::class, 'create'])->name('posts.create');
     Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
     // Admin Category Management Routes
@@ -64,7 +63,6 @@ Route::middleware(['auth'])->group(function () {
 
     // Author Post Management Routes
     Route::get('/my-posts', [PostController::class, 'myPosts'])->name('posts.my');
-    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
     // Like & Comments
