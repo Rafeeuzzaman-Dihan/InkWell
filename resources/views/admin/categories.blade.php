@@ -31,7 +31,7 @@
                         <td class="py-2 px-4 border-b">{{ $category->name }}</td>
                         <td class="py-2 px-4 border-b">
                             <a href="{{ route('categories.edit', $category->id) }}" class="text-blue-500">Edit</a>
-                            <form action="{{ route('categories.destroy', $categories->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('categories.destroy', $category->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-red-500">Delete</button>

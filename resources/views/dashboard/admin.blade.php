@@ -36,11 +36,12 @@
         <a href="{{ url('admin/user') }}" class="inline-block bg-gray-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-600 transition duration-200">
             User Management
         </a>
-        <a href="{{ url('admin/posts') }}" class="inline-block bg-violet-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-violet-600 transition duration-200 mt-2">
-            Post Management
-        </a>
         <a href="{{ url('admin/categories') }}" class="inline-block bg-emerald-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-600 transitio duration-200 mt-2">
             Category Management
         </a>
+        <a href="{{ url('admin/posts') }}" class="inline-block bg-violet-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-violet-600 transition duration-200 mt-2">
+            Post Management
+        </a>
+
     </div>
 </section>
