@@ -71,53 +71,61 @@
 
     <script>
         document.getElementById('like-button').addEventListener('click', function () {
-            axios.post('{{ route('likes.store', $post->id) }}', {
-                _token: '{{ csrf_token() }}'
-            })
-                .then(response => {
-                    const likeCount = document.getElementById('like-count');
-                    const button = document.getElementById('like-button');
-
-                    if (response.data.action === 'liked') {
-                        likeCount.innerText = parseInt(likeCount.innerText) + 1 + ' Likes';
-                        button.classList.remove('bg-gray-300');
-                        button.classList.add('bg-blue-500');
-                        button.querySelector('i').classList.remove('text-gray-700');
-                        button.querySelector('i').classList.add('text-white');
-                    } else {
-                        likeCount.innerText = parseInt(likeCount.innerText) - 1 + ' Likes';
-                        button.classList.remove('bg-blue-500');
-                        button.classList.add('bg-gray-300');
-                        button.querySelector('i').classList.remove('text-white');
-                        button.querySelector('i').classList.add('text-gray-700');
-                    }
+            @auth
+                axios.post('{{ route('likes.store', $post->id) }}', {
+                    _token: '{{ csrf_token() }}'
                 })
-                .catch(error => {
-                    console.error('Error liking the post:', error);
-                });
+                    .then(response => {
+                        const likeCount = document.getElementById('like-count');
+                        const button = document.getElementById('like-button');
+
+                        if (response.data.action === 'liked') {
+                            likeCount.innerText = parseInt(likeCount.innerText) + 1 + ' Likes';
+                            button.classList.remove('bg-gray-300');
+                            button.classList.add('bg-blue-500');
+                            button.querySelector('i').classList.remove('text-gray-700');
+                            button.querySelector('i').classList.add('text-white');
+                        } else {
+                            likeCount.innerText = parseInt(likeCount.innerText) - 1 + ' Likes';
+                            button.classList.remove('bg-blue-500');
+                            button.classList.add('bg-gray-300');
+                            button.querySelector('i').classList.remove('text-white');
+                            button.querySelector('i').classList.add('text-gray-700');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error liking the post:', error);
+                    });
+            @else
+                window.location.href = '{{ route('login') }}';
+            @endauth
         });
 
         document.getElementById('comment-form').addEventListener('submit', function (e) {
             e.preventDefault();
-            const body = document.getElementById('body').value;
+            @auth
+                const body = document.getElementById('body').value;
 
-            axios.post('{{ route('comments.store', $post->id) }}', {
-                _token: '{{ csrf_token() }}',
-                body: body
-            })
-                .then(response => {
-                    const commentsDiv = document.getElementById('comments');
-                    const newComment = document.createElement('div');
-                    newComment.classList.add('border-b', 'mb-4', 'pb-2', 'comment');
-                    newComment.innerHTML = `<p class="font-bold">${response.data.user_name}</p>
-                                        <p>${response.data.body}</p>
-                                        <p class="text-gray-600">${response.data.created_at}</p>`;
-                    commentsDiv.prepend(newComment);
-                    document.getElementById('body').value = '';
+                axios.post('{{ route('comments.store', $post->id) }}', {
+                    _token: '{{ csrf_token() }}',
+                    body: body
                 })
-                .catch(error => {
-                    console.error('Error submitting comment:', error);
-                });
+                    .then(response => {
+                        const commentsDiv = document.getElementById('comments');
+                        const newComment = document.createElement('div');
+                        newComment.classList.add('border-b', 'mb-4', 'pb-2', 'comment');
+                        newComment.innerHTML = `<p class="font-bold">${response.data.user_name}</p>
+                                            <p>${response.data.body}</p>
+                                            <p class="text-gray-600">${response.data.created_at}</p>`;
+                        commentsDiv.prepend(newComment);
+                        document.getElementById('body').value = '';
+                    })
+                    .catch(error => {
+                        console.error('Error submitting comment:', error);
+                    });
+            @else
+                window.location.href = '{{ route('login') }}';
+            @endauth
         });
     </script>
 </body>
