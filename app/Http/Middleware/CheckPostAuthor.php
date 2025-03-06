@@ -11,12 +11,17 @@ class CheckPostAuthor
 {
     public function handle(Request $request, Closure $next)
     {
-        $post = Post::findOrFail($request->route('post'));
+        $post = $request->route('post');
 
-        if (Auth::user()->is_admin || $post->user_id === Auth::id()) {
+        if (!$post) {
+            return abort(404);
+        }
+
+        if (Auth::user()->role === 'admin' || $post->user_id === Auth::id()) {
             return $next($request);
         }
 
         return redirect()->route('dashboard')->with('error', 'You do not have permission to manage this post.');
     }
+
 }
