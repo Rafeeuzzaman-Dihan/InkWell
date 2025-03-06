@@ -19,6 +19,12 @@
                         <i class="fas fa-sign-out-alt mr-1"></i> Logout
                     </button>
                 </form>
+            @else
+                <a href="{{ route('login') }}" class="mx-4">
+                    <button class="flex items-center bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition duration-200">
+                        <i class="fas fa-sign-in-alt mr-1"></i> Login
+                    </button>
+                </a>
             @endauth
         </div>
     </div>
