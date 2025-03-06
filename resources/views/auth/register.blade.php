@@ -57,6 +57,11 @@
                         Register
                     </button>
                 </div>
+                <div class="font-bold text-center">
+                    <p class="text-sm mt-12 text-gray-800">Already an user? <a href="login" class="text-blue-600 font-semibold hover:underline ml-1">
+                        Login
+                    </a></p>
+                </div>
             </form>
         </div>
     </div>
