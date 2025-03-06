@@ -56,7 +56,7 @@ class PostController extends Controller
     // Display all posts (Admin view)
     public function index()
     {
-        $posts = Post::with('categories')->get();
+        $posts = Post::with('categories')->latest()->get();
         return view('posts.index', compact('posts'));
     }
 
