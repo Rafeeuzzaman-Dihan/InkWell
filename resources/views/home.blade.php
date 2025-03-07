@@ -6,36 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InkWell</title>
     @vite('resources/css/app.css')
-    <style>
-        /* Add hover effect for each card */
-        .post-card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .post-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Style for author and time */
-        .author-time {
-            background-color: #f0f4ff; /* Light blue background */
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 14px;
-            color: #1d4ed8; /* Dark blue color for text */
-        }
-
-        /* Style for category buttons */
-        .category-button {
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .category-button:hover {
-            background-color: #1d4ed8; /* Dark blue background on hover */
-            color: white; /* White text on hover */
-        }
-    </style>
 </head>
 
 <body class="bg-gray-100">
@@ -51,7 +21,7 @@
                             class="px-4 py-2 border rounded {{ $selectedCategory === null ? 'bg-blue-500 text-white' : 'bg-gray-200' }}">All</button>
                         @foreach ($categories as $category)
                             <button type="submit" name="category" value="{{ $category->id }}"
-                                class="category-button px-4 py-2 border rounded {{ $selectedCategory == $category->id ? 'bg-blue-500 text-white' : 'bg-gray-200' }}">
+                                class="px-4 py-2 border rounded {{ $selectedCategory == $category->id ? 'bg-blue-500 text-white' : 'bg-gray-200' }} hover:bg-blue-500 hover:text-white transition duration-300">
                                 {{ $category->name }}
                             </button>
                         @endforeach
@@ -72,7 +42,7 @@
 
                             <div class="p-6 flex-1">
                                 <h3 class="text-lg font-bold text-gray-800 mb-3">{{ $post->title }}</h3>
-                                <p class="author-time mb-2">Posted by: {{ $post->user->name }} | {{ $post->created_at->format('M d, Y') }}</p>
+                                <p class="bg-blue-100 text-blue-800 p-2 rounded mb-2">Posted by: {{ $post->user->name }} | {{ $post->created_at->format('M d, Y') }}</p>
                                 <p class="text-gray-500 text-sm mb-4">{{ Str::limit($post->content, 100) }}</p>
 
                                 <div class="flex justify-between items-center text-blue-500 text-l">
