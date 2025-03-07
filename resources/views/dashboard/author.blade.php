@@ -37,20 +37,24 @@
         </div>
 
         <div class="mb-4">
-
             <label for="content" class="block text-sm font-medium text-gray-700">Content</label>
             <textarea name="content" id="content" rows="4" placeholder="Write your content here..." required
                 class="mt-1 p-2 border border-gray-300 rounded-md w-full">{{ old('content') }}</textarea>
         </div>
 
         <div class="mb-4">
-        <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">Create New Post</button>
-        <a href="{{ route('posts.my') }}" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">Manage My Posts</a>
+            <label for="image" class="block text-sm font-medium text-gray-700">Upload Image</label>
+            <input type="file" name="image" id="image" accept="image/*"
+                class="mt-1 block w-full text-sm text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500">
+        </div>
 
+        <div class="mb-4">
+            <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">Create New Post</button>
+            <a href="{{ route('posts.my') }}" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">Manage My Posts</a>
+        </div>
 
     </form>
 </section>
-</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
