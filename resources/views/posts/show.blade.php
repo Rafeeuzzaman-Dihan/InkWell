@@ -45,6 +45,19 @@
                 <p id="like-count" class="text-sm text-gray-600">{{ $post->likes->count() }} Likes</p>
             </div>
 
+            @auth
+                @if ($post->user_id === Auth::id())
+                    <div class="mb-4">
+                        <a href="{{ route('posts.edit', $post->id) }}" class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition duration-200">Edit</a>
+                        <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="inline-block">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-200">Delete</button>
+                        </form>
+                    </div>
+                @endif
+            @endauth
+
             <h3 class="text-xl font-semibold mb-4">Comments</h3>
 
             <div id="comments">
