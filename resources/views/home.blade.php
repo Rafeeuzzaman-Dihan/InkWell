@@ -25,6 +25,16 @@
             font-size: 14px;
             color: #1d4ed8; /* Dark blue color for text */
         }
+
+        /* Style for category buttons */
+        .category-button {
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .category-button:hover {
+            background-color: #1d4ed8; /* Dark blue background on hover */
+            color: white; /* White text on hover */
+        }
     </style>
 </head>
 
@@ -41,7 +51,7 @@
                             class="px-4 py-2 border rounded {{ $selectedCategory === null ? 'bg-blue-500 text-white' : 'bg-gray-200' }}">All</button>
                         @foreach ($categories as $category)
                             <button type="submit" name="category" value="{{ $category->id }}"
-                                class="px-4 py-2 border rounded {{ $selectedCategory == $category->id ? 'bg-blue-500 text-white' : 'bg-gray-200' }}">
+                                class="category-button px-4 py-2 border rounded {{ $selectedCategory == $category->id ? 'bg-blue-500 text-white' : 'bg-gray-200' }}">
                                 {{ $category->name }}
                             </button>
                         @endforeach
