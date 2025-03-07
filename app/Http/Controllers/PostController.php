@@ -29,13 +29,11 @@ class PostController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        // Handle image upload
         $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images', 'public');
         }
 
-        // Create the post
         $post = Post::create([
             'title' => $request->title,
             'content' => $request->content,
@@ -43,7 +41,6 @@ class PostController extends Controller
             'user_id' => Auth::id(),
         ]);
 
-        // Attach categories to the post
         $post->categories()->attach($request->categories);
 
         return redirect()->route('dashboard')->with('success', 'Post created successfully!');
@@ -66,7 +63,7 @@ class PostController extends Controller
     // Show the form to edit a post
     public function edit(Post $post)
     {
-        $categories = Category::all();
+        $categories = Category::all(); // Retrieve all categories
         return view('posts.edit', compact('post', 'categories'));
     }
 
@@ -75,20 +72,18 @@ class PostController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        // Check for new image upload
+        $imagePath = $post->image;
         if ($request->hasFile('image')) {
-            // Store the new image and update the image path
             $imagePath = $request->file('image')->store('images', 'public');
-            $post->image = $imagePath; // Update image path in the post
         }
 
         // Update the post with new data
         $post->update([
             'title' => $request->title,
             'content' => $request->content,
+            'image' => $imagePath,
         ]);
 
-        // Sync categories
         $post->categories()->sync($request->categories);
 
         return redirect()->route('dashboard')->with('success', 'Post updated successfully!');
@@ -97,11 +92,6 @@ class PostController extends Controller
     // Delete a post from the database
     public function destroy(Post $post)
     {
-        // Optionally, delete the associated image from storage
-        if ($post->image) {
-            \Storage::disk('public')->delete($post->image);
-        }
-
         $post->delete();
 
         return redirect()->route('dashboard')->with('success', 'Post deleted successfully!');
