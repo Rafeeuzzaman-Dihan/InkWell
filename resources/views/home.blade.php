@@ -34,7 +34,7 @@
             @else
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-sm:gap-8">
                     @foreach ($posts as $post)
-                        <div class="post-card bg-white rounded overflow-hidden shadow-md flex flex-col">
+                        <div class="post-card bg-white rounded overflow-hidden shadow-md flex flex-col transition-transform transform hover:scale-105 hover:shadow-lg">
                             @if ($post->image)
                                 <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image"
                                     class="w-full h-52 object-cover" />
