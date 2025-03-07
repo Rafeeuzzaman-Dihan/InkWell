@@ -6,6 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InkWell</title>
     @vite('resources/css/app.css')
+    <style>
+        /* Add hover effect for each card */
+        .post-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style for author and time */
+        .author-time {
+            background-color: #f0f4ff; /* Light blue background */
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #1d4ed8; /* Dark blue color for text */
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100">
@@ -34,7 +54,7 @@
             @else
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-sm:gap-8">
                     @foreach ($posts as $post)
-                        <div class="bg-white rounded overflow-hidden shadow-md flex flex-col">
+                        <div class="post-card bg-white rounded overflow-hidden shadow-md flex flex-col">
                             @if ($post->image)
                                 <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image"
                                     class="w-full h-52 object-cover" />
@@ -42,6 +62,7 @@
 
                             <div class="p-6 flex-1">
                                 <h3 class="text-lg font-bold text-gray-800 mb-3">{{ $post->title }}</h3>
+                                <p class="author-time mb-2">Posted by: {{ $post->user->name }} | {{ $post->created_at->format('M d, Y') }}</p>
                                 <p class="text-gray-500 text-sm mb-4">{{ Str::limit($post->content, 100) }}</p>
 
                                 <div class="flex justify-between items-center text-blue-500 text-l">
@@ -60,13 +81,12 @@
                                 <a href="{{ route('posts.show', $post->id) }}"
                                     class="inline-block px-4 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white text-[13px]">Read
                                     More</a>
-                                <p class="text-gray-600 text-sm">{{ $post->created_at->format('M d, Y') }}</p>
                             </div>
                         </div>
                     @endforeach
                 </div>
                 <div class="mt-6">
-                    {{ $posts->links() }} 
+                    {{ $posts->links() }}
                 </div>
             @endif
         </div>
