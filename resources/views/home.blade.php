@@ -29,6 +29,7 @@
                 </form>
             </div>
 
+
             @if ($posts->isEmpty())
                 <p class="text-center text-gray-600">No posts available.</p>
             @else
