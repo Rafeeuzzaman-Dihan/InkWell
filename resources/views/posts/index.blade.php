@@ -34,7 +34,7 @@
                     @foreach($posts as $post)
                         <tr class="hover:bg-gray-100 transition duration-200">
                             <td class="border px-4 py-2 text-gray-700">{{ $post->title }}</td>
-                            <td class="border px-4 py-2 text-gray-700">{{ $post->author->name ?? 'N/A' }}</td>
+                            <td class="border px-4 py-2 text-gray-700">{{ $post->user->name ?? 'N/A' }}</td>
                             <td class="border px-4 py-2 text-gray-700">
                                 @foreach($post->categories as $category)
                                     <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">{{ $category->name }}</span>
