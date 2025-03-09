@@ -20,6 +20,11 @@
             </div>
         @endif
 
+        <form action="{{ route('users.index') }}" method="GET" class="mb-4">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by name" class="border rounded p-2">
+            <button type="submit" class="bg-blue-600 text-white rounded p-2 ml-2">Search</button>
+        </form>
+
         <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-200">
