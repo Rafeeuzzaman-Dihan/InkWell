@@ -12,8 +12,9 @@ class UserController extends Controller
         $search = $request->input('search');
 
         $users = User::when($search, function ($query, $search) {
-            return $query->where('name', 'like', "%{$search}%");
-        })->get();
+                return $query->where('name', 'like', "%{$search}%");
+            })
+            ->paginate(10);
 
         return view('admin.user', compact('users', 'search'));
     }

@@ -37,9 +37,9 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    @foreach($users as $index => $user) 
+                    @foreach($users as $index => $user)
                         <tr class="hover:bg-gray-100 transition duration-200">
-                            <td class="py-3 px-4 border-b text-gray-700">{{ $index + 1 }}</td>
+                            <td class="py-3 px-4 border-b text-gray-700">{{ $users->firstItem() + $index }}</td>
                             <td class="py-3 px-4 border-b text-gray-700">{{ $user->name }}</td>
                             <td class="py-3 px-4 border-b text-gray-700">{{ $user->email }}</td>
                             <td class="py-3 px-4 border-b text-gray-700">{{ $user->role }}</td>
@@ -55,6 +55,10 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+
+        <div class="mt-4">
+            {{ $users->links() }}
         </div>
     </div>
 </body>
