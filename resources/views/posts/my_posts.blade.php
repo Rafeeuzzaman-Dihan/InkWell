@@ -13,7 +13,7 @@
     @include('components.navbar')
 
 <section class="bg-white shadow-md rounded-lg p-4">
-    <h2 class="text-xl font-semibold mb-4">My Posts</h2>
+    <h2 class="text-center text-3xl font-semibold mb-4">My Posts</h2>
 
     @if(session('success'))
         <div class="bg-green-500 text-white p-4 rounded-lg mb-4">
