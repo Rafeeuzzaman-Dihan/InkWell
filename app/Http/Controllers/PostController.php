@@ -54,11 +54,21 @@ class PostController extends Controller
     }
 
     // Display all posts (Admin view)
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::with('categories')->latest()->get();
-        return view('posts.index', compact('posts'));
-    }
+        $search = $request->input('search');
+
+        $posts = Post::with('categories', 'user')
+            ->when($search, function ($query, $search) {
+                return $query->whereHas('user', function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%");
+        });
+    })
+        ->latest()
+        ->get();
+
+    return view('posts.index', compact('posts', 'search'));
+}
 
     // Show the form to edit a post
     public function edit(Post $post)

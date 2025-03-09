@@ -20,6 +20,11 @@
             </div>
         @endif
 
+        <form action="{{ route('posts.index') }}" method="GET" class="mb-4">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by Author" class="border rounded p-2 mr-2">
+            <button type="submit" class="bg-blue-500 text-white rounded py-2 px-4">Search</button>
+        </form>
+
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-200">
