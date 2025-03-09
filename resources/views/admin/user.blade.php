@@ -12,41 +12,45 @@
     @include('components.navbar')
 
     <div class="container mx-auto p-6">
-        <h1 class="text-3xl font-bold mb-4">User Management</h1>
+        <h1 class="text-4xl font-bold mb-6 text-gray-800">User Management</h1>
 
         @if(session('success'))
-            <div class="bg-red-500 text-white p-4 rounded-lg mb-4">
+            <div class="bg-green-500 text-white p-4 rounded-lg mb-4">
                 {{ session('success') }}
             </div>
         @endif
 
-        <table class="min-w-full bg-white shadow-md rounded-lg">
-                <tr>
-                    <th class="py-2 px-4 border-b">ID</th>
-                    <th class="py-2 px-4 border-b">Name</th>
-                    <th class="py-2 px-4 border-b">Email</th>
-                    <th class="py-2 px-4 border-b">Role</th>
-                    <th class="py-2 px-4 border-b">Actions</th>
-                </tr>
-            <tbody>
-                @foreach($users as $user)
+        <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-200">
                     <tr>
-                        <td class="py-2 px-4 border-b">{{ $user->id }}</td>
-                        <td class="py-2 px-4 border-b">{{ $user->name }}</td>
-                        <td class="py-2 px-4 border-b">{{ $user->email }}</td>
-                        <td class="py-2 px-4 border-b">{{ $user->role }}</td>
-                        <td class="py-2 px-4 border-b">
-                            <a href="{{ route('users.edit', $user->id) }}" class="text-blue-500">Edit</a>
-                            <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-500">Delete</button>
-                            </form>
-                        </td>
+                        <th class="py-3 px-4 text-left text-lg font-medium text-gray-600">ID</th>
+                        <th class="py-3 px-4 text-left text-lg font-medium text-gray-600">Name</th>
+                        <th class="py-3 px-4 text-left text-lg font-medium text-gray-600">Email</th>
+                        <th class="py-3 px-4 text-left text-lg font-medium text-gray-600">Role</th>
+                        <th class="py-3 px-4 text-center text-lg font-medium text-gray-600">Actions</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    @foreach($users as $user)
+                        <tr class="hover:bg-gray-100 transition duration-200">
+                            <td class="py-3 px-4 border-b text-gray-700">{{ $user->id }}</td>
+                            <td class="py-3 px-4 border-b text-gray-700">{{ $user->name }}</td>
+                            <td class="py-3 px-4 border-b text-gray-700">{{ $user->email }}</td>
+                            <td class="py-3 px-4 border-b text-gray-700">{{ $user->role }}</td>
+                            <td class="py-3 px-4 border-b text-center">
+                                <a href="{{ route('users.edit', $user->id) }}" class="text-blue-600 hover:text-blue-800 font-semibold">Edit</a>
+                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:text-red-800 font-semibold ml-2">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 
