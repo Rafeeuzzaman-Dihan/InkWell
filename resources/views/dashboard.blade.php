@@ -13,8 +13,6 @@
     @include('components.navbar')
     <div class="container mx-auto p-6">
         <h1 class="text-3xl font-bold mb-4">Dashboard</h1>
-        <p class="mb-6 text-gray-700">Welcome to your dashboard!</p>
-
         <section class="bg-white shadow-md rounded-lg p-4 mb-8">
             <h2 class="text-xl font-semibold mb-2">Profile</h2>
             <ul class="list-disc pl-5">
