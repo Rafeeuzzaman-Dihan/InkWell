@@ -29,7 +29,7 @@
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-200">
                     <tr>
-                        <th class="py-3 px-4 text-left text-lg font-medium text-gray-600">ID</th>
+                        <th class="py-3 px-4 text-left text-lg font-medium text-gray-600">SL</th>
                         <th class="py-3 px-4 text-left text-lg font-medium text-gray-600">Name</th>
                         <th class="py-3 px-4 text-left text-lg font-medium text-gray-600">Email</th>
                         <th class="py-3 px-4 text-left text-lg font-medium text-gray-600">Role</th>
@@ -37,9 +37,9 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    @foreach($users as $user)
+                    @foreach($users as $index => $user) 
                         <tr class="hover:bg-gray-100 transition duration-200">
-                            <td class="py-3 px-4 border-b text-gray-700">{{ $user->id }}</td>
+                            <td class="py-3 px-4 border-b text-gray-700">{{ $index + 1 }}</td>
                             <td class="py-3 px-4 border-b text-gray-700">{{ $user->name }}</td>
                             <td class="py-3 px-4 border-b text-gray-700">{{ $user->email }}</td>
                             <td class="py-3 px-4 border-b text-gray-700">{{ $user->role }}</td>
